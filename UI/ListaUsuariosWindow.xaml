@@ -1,0 +1,37 @@
+﻿<Window x:Class="UI.ListaUsuariosWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UI"
+        mc:Ignorable="d"
+        Title="ListaUsuariosWindow" Height="450" Width="800">
+    <Grid x:Name="Mostrarusers">
+        <Label Content="LISTA DE USUÁRIOS CADASTRADOS" HorizontalAlignment="Left" Margin="207,30,0,0" VerticalAlignment="Top" FontSize="80" Height="34" Width="365" FontWeight="Normal" />
+        <DataGrid x:Name="Usuarios"
+          AutoGenerateColumns="False"
+          IsReadOnly="False"
+          Margin="10,10,10,161">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id"
+                            Binding="{Binding Id}"
+                            IsReadOnly="True"/>
+
+                <DataGridTextColumn Header="Nome"
+                            Binding="{Binding Nome}"/>
+
+                <DataGridTextColumn Header="Email"
+                            Binding="{Binding Email}"/>
+
+                <DataGridTextColumn Header="Senha"
+                            Binding="{Binding Senha}"
+                            IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Salvar" Margin="33,330,539,0" VerticalAlignment="Top" Click="btnSalvar" />
+        <Button Content="Voltar" Margin="537,332,35,0" VerticalAlignment="Top" Click="Voltar" />
+        <Button Content="Deletar" Margin="286,331,286,0" VerticalAlignment="Top" Click="Deletar" />
+
+    </Grid>
+</Window>
