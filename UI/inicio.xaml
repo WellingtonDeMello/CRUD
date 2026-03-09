@@ -1,0 +1,142 @@
+﻿<Window x:Class="SeuProjeto.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login"
+        Height="450"
+        Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#F0F0F0">
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/pngtree-background-design-with-abstract-shapes-in-white-orange-and-blue-colors-image_632657.jpg"/>
+        </Grid.Background>
+
+        <Border Height="400"
+                Background="White"
+                CornerRadius="15"
+                Margin="73,17,75,17">
+
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="20"
+                                  ShadowDepth="2"
+                                  Opacity="0.2"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- LADO LARANJA -->
+                <Border Grid.Column="0"
+                        Background="#FFFF6900"
+                        CornerRadius="15,0,0,15">
+
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="20">
+
+                        <Image Height="170"
+                               Width="169"
+                               Source="/ChatGPT Image 27 de jan. de 2026, 19_20_51.png"/>
+
+                        <TextBlock Text="Bem vindo a Gestex!"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   Margin="0,10,0,0"
+                                   TextAlignment="Center"/>
+
+                        <TextBlock Text="A gestão que se adapta a você."
+                                   Foreground="White"
+                                   FontSize="12"
+                                   Margin="0,5,0,20"
+                                   TextAlignment="Center"/>
+
+                        <!-- BOTÃO ENTRAR CORRIGIDO -->
+                        <Button x:Name="entrarButton"
+                                Content="ENTRAR"
+                                Width="150"
+                                Height="40"
+                                Background="#FF6900"
+                                Foreground="White"
+                                FontWeight="Bold">
+
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                            CornerRadius="20"
+                                            BorderBrush="White"
+                                            BorderThickness="1.5">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                                          VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- LADO DIREITO -->
+                <StackPanel Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Margin="40">
+
+                    <TextBlock Text="CRIE SUA CONTA"
+                               Margin="0,0,0,30"
+                               HorizontalAlignment="Center"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#1B1B1B"/>
+
+                    <TextBox Height="40"
+                             Margin="0,0,0,15"
+                             VerticalContentAlignment="Center"
+                             BorderThickness="0"
+                             Background="#EFEFEF"
+                             Padding="10"
+                             Tag="Nome"/>
+
+                    <TextBox Height="40"
+                             Margin="0,0,0,15"
+                             VerticalContentAlignment="Center"
+                             BorderThickness="0"
+                             Background="#EFEFEF"
+                             Padding="10"
+                             Tag="Email"/>
+
+                    <PasswordBox Height="40"
+                                 Margin="0,0,0,20"
+                                 BorderThickness="0"
+                                 Background="#EFEFEF"
+                                 Padding="10"/>
+
+                    <!-- BOTÃO CADASTRAR CORRIGIDO -->
+                    <Button Content="CADASTRAR"
+                            Height="40"
+                            Background="#FFFF6900"
+                            Foreground="White"
+                            FontWeight="Bold">
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        CornerRadius="22">
+                                    <ContentPresenter HorizontalAlignment="Center"
+                                                      VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+
+                    </Button>
+
+                </StackPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

@@ -4,8 +4,21 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>Sis.ico</ApplicationIcon>
+    <ApplicationIcon>gestex_icon_transparent.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="7b7910e2a8267f3a3d52d9120c551e58.jpg" />
+    <None Remove="7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" />
+    <None Remove="ChatGPT Image 27 de jan. de 2026, 19_20_51.png" />
+    <None Remove="key.png" />
+    <None Remove="mail.png" />
+    <None Remove="pngtree-background-design-with-abstract-shapes-in-white-orange-and-blue-colors-image_632657.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="gestex_icon_transparent.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
@@ -20,6 +33,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Repositorio\Repositorio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="7b7910e2a8267f3a3d52d9120c551e58.jpg" />
+    <Resource Include="7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" />
+    <Resource Include="ChatGPT Image 27 de jan. de 2026, 19_20_51.png" />
+    <Resource Include="key.png" />
+    <Resource Include="mail.png" />
+    <Resource Include="pngtree-background-design-with-abstract-shapes-in-white-orange-and-blue-colors-image_632657.jpg" />
   </ItemGroup>
 
 </Project>

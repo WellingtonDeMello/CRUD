@@ -12,6 +12,7 @@ namespace UI
         ProdutoModel _pModel = new ProdutoModel();
         private Produto _produto;
 
+
         public NovoProduto()
         {
             InitializeComponent();
@@ -71,5 +72,8 @@ namespace UI
                 MessageBox.Show("Produto Atualizado com sucesso!");
             }
         }
+
+
     }
+       
 }

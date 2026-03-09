@@ -1,5 +1,6 @@
 ﻿using Dominio;
 using Repositorio;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,20 +17,17 @@ namespace UI.Model
             return await _usuarioRepositorio.AddIfEmailNotExist(novoUsuario);
         }
 
-        public async Task<string> Entrar(string email, string senha)
+        public async Task<Usuario> Entrar(string email, string senha)
         {
-            Usuario login = new Usuario(email, Codificar(senha));
-            Usuario usuario = await _usuarioRepositorio.GetByEmailSenhaAsync(login);
-
-            if (usuario != null)
+            using (var context = new Context())
             {
-                return usuario.Nome;
-            }
-            else
-            {
-                return "";
-            }
+                string senhaCodificada = Codificar(senha);
 
+                var usuario = context.Usuarios
+                    .FirstOrDefault(u => u.Email == email && u.Senha == senhaCodificada);
+
+                return usuario;
+            }
         }
 
         public static string Codificar(string texto)

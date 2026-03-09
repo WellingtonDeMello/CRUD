@@ -33,6 +33,7 @@
         <Label Content="Unidade de Medida" HorizontalAlignment="Left" Margin="31,8,0,0" VerticalAlignment="Top" Grid.Row="2"/>
         <Button Content="Confirmar" HorizontalAlignment="Left" Margin="249,20.5,0,0" VerticalAlignment="Top" Width="170" Grid.Column="1" Grid.Row="3" Click="btnConfirmarProduto"/>
         <Button Content="Cancelar" IsCancel="True"  Grid.Column="1" HorizontalAlignment="Left" Margin="33,20,0,0" Grid.Row="3" VerticalAlignment="Top" Width="170"/>
+      
 
     </Grid>
 </Window>

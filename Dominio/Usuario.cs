@@ -12,7 +12,7 @@ namespace Dominio
         [Required]
         public string Nome { get; set; }
 
-        [Column(TypeName = "nvarchar(40)")]
+        [Column(TypeName = "nvarchar(100)")]
         [EmailAddress]
         [Required]
         public string Email { get; set; }
@@ -20,6 +20,9 @@ namespace Dominio
         [Column(TypeName = "nvarchar(100)")]
         [Required]
         public string Senha { get; set; }
+
+        [Column(TypeName = "nvarchar(20)")]
+        public string TipoUsuario { get; set; } = "Funcionario";
 
         public Usuario()
         {
@@ -34,6 +37,7 @@ namespace Dominio
         public Usuario(string nome, string email, string senha) : this(email, senha)
         {
             Nome = nome;
+            TipoUsuario = "Funcionario";
         }
     }
 }

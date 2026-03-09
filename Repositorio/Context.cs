@@ -12,7 +12,7 @@ namespace Repositorio
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=TQR220384\SQLEXPRESS;Database=BancoWpf;User Id=tds;Password=tds123;");
+            optionsBuilder.UseSqlServer(@"Server=TQR220384\SQLEXPRESS;Database=GestexWPF;User Id=tds;Password=tds123;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
