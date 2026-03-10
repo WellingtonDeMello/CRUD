@@ -35,9 +35,9 @@
                         Stretch="Fill"/>
         </Grid.Background>
 
-        <StackPanel VerticalAlignment="Center"
-                    HorizontalAlignment="Center"
-                    Width="270">
+        <StackPanel VerticalAlignment="Top"
+                    HorizontalAlignment="Left"
+                    Width="268" Margin="36,134,0,0">
 
             <!-- EMAIL -->
             <Border CornerRadius="25"
@@ -101,19 +101,14 @@
                     Click="btnEntrar"/>
 
             <Button Content="Voltar"
-                    Height="45"
+                    Height="51"
                     Margin="0,0,0,10"
                     Background="#084CBB"
                     Style="{StaticResource RoundedButton}"
                     Click="btnNovo"/>
 
-            <Button Content="Listar users"
-                    Height="40"
-                    Background="#555"
-                    Style="{StaticResource RoundedButton}"
-                    Click="btnLista"/>
-
         </StackPanel>
+        <Image HorizontalAlignment="Left" Height="160" Margin="90,-16,0,0" VerticalAlignment="Top" Width="162" Source="/ChatGPT Image 27 de jan. de 2026, 19_20_51.png"/>
 
     </Grid>
 </Window>

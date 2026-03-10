@@ -4,6 +4,7 @@ using Microsoft.VisualBasic;
 using Repositorio;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using UI.Model;
 
@@ -15,9 +16,6 @@ namespace UI
 
         private void MostrarUsuarios(object sender, RoutedEventArgs e)
         {
-            ListaUsuariosWindow listaUsuariosWindow = new ListaUsuariosWindow();
-           listaUsuariosWindow.ShowDialog();
-
             if (tipoUsuarioAtual != "Admin")
             {
                 MessageBox.Show("Apenas administradores podem acessar usuários.");
@@ -28,11 +26,10 @@ namespace UI
             PainelVendas.Visibility = Visibility.Collapsed;
             PainelUsuarios.Visibility = Visibility.Visible;
 
-            BtnUsuarios.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
-            BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-            BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
+            FormularioUsuario.Visibility = Visibility.Visible;
         }
 
+        
         public Principal(string usuarioAtual, string tipoUsuario)
         {
             InitializeComponent();
@@ -49,20 +46,17 @@ namespace UI
 
         // ===================== USUARIOS =====================
 
-        private async void BtnConsultarUsuarios_Click(object sender, RoutedEventArgs e)
+        private void BtnConsultarUsuarios_Click(object sender, RoutedEventArgs e)
         {
             using (var context = new Context())
             {
-                gridUsuarios.ItemsSource = await context.Usuarios.ToListAsync();
+                gridUsuarios.ItemsSource = context.Usuarios.ToList();
             }
         }
 
         private void BtnNovoUsuario_Click(object sender, RoutedEventArgs e)
         {
-            ListaUsuariosWindow tela = new ListaUsuariosWindow();
-            tela.ShowDialog();
-
-            BtnConsultarUsuarios_Click(null, null);
+            FormularioUsuario.Visibility = Visibility.Visible;
         }
 
         private void BtnExcluirUsuario_Click(object sender, RoutedEventArgs e)
@@ -94,10 +88,42 @@ namespace UI
             BtnConsultarUsuarios_Click(null, null);
         }
 
+        private void BtnSalvarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            using (var context = new Context())
+            {
+                Usuario u = new Usuario();
+
+                u.Nome = txtNomeUsuario.Text.Trim();
+                u.Email = txtEmailUsuario.Text.Trim();
+                u.Senha = UsuarioModel.Codificar(txtSenhaUsuario.Password); 
+                u.TipoUsuario = (comboTipoUsuario.SelectedItem as ComboBoxItem).Content.ToString();
+
+                context.Usuarios.Add(u);
+                context.SaveChanges();
+            }
+
+            MessageBox.Show("Usuário criado!");
+
+            BtnConsultarUsuarios_Click(null, null);
+        }
+
+        private void BtnEditarUsuario_Click(object sender, RoutedEventArgs e)
+        {
+            if (gridUsuarios.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um usuário.");
+                return;
+            }
+
+            gridUsuarios.BeginEdit();
+        }
+
         private void MostrarProdutos(object sender, RoutedEventArgs e)
         {
             PainelProdutos.Visibility = Visibility.Visible;
             PainelVendas.Visibility = Visibility.Collapsed;
+            PainelUsuarios.Visibility = Visibility.Collapsed;
 
             BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
             BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
@@ -107,6 +133,7 @@ namespace UI
         {
             PainelProdutos.Visibility = Visibility.Collapsed;
             PainelVendas.Visibility = Visibility.Visible;
+            PainelUsuarios.Visibility = Visibility.Collapsed;
 
             BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
             BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));

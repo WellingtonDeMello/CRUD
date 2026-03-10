@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace UI.Model
 {
@@ -13,7 +14,12 @@ namespace UI.Model
 
         public async Task<bool> CriarUsuario(string nome, string email, string senha)
         {
-            Usuario novoUsuario = new Usuario(nome, email, Codificar(senha));
+            Usuario novoUsuario = new Usuario(
+                nome.Trim(),
+                email.Trim(),
+                Codificar(senha)
+            );
+
             return await _usuarioRepositorio.AddIfEmailNotExist(novoUsuario);
         }
 
@@ -23,8 +29,11 @@ namespace UI.Model
             {
                 string senhaCodificada = Codificar(senha);
 
-                var usuario = context.Usuarios
-                    .FirstOrDefault(u => u.Email == email && u.Senha == senhaCodificada);
+                var usuario = await context.Usuarios
+                    .FirstOrDefaultAsync(u =>
+                        u.Email == email.Trim() &&
+                        u.Senha == senhaCodificada
+                    );
 
                 return usuario;
             }
@@ -32,17 +41,20 @@ namespace UI.Model
 
         public static string Codificar(string texto)
         {
-            var md5 = MD5.Create();
-            byte[] bytes = Encoding.ASCII.GetBytes(texto);
-            byte[] hash = md5.ComputeHash(bytes);
-
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
+            using (var md5 = MD5.Create())
             {
-                sb.Append(hash[i].ToString("X2"));
-            }
+                byte[] bytes = Encoding.UTF8.GetBytes(texto);
+                byte[] hash = md5.ComputeHash(bytes);
 
-            return sb.ToString();
+                StringBuilder sb = new StringBuilder();
+
+                foreach (byte b in hash)
+                {
+                    sb.Append(b.ToString("X2"));
+                }
+
+                return sb.ToString();
+            }
         }
     }
 }
