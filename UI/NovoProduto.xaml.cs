@@ -12,11 +12,11 @@ namespace UI
         ProdutoModel _pModel = new ProdutoModel();
         private Produto _produto;
 
-
         public NovoProduto()
         {
             InitializeComponent();
 
+            // Carrega enums nos comboboxes
             boxGrupo.ItemsSource = Enum.GetValues(typeof(ProdutoGrupo)).Cast<ProdutoGrupo>();
             boxUnMedida.ItemsSource = Enum.GetValues(typeof(UnidadeMedida)).Cast<UnidadeMedida>();
         }
@@ -27,53 +27,59 @@ namespace UI
 
             if (_produto != null)
             {
+                // Preenche os campos com os valores do produto para edição
                 boxDescricao.Text = _produto.Descricao;
                 boxUnMedida.Text = _produto.UnidadeDeMedida.ToString();
                 boxCodBarras.Text = _produto.CodBarras;
                 boxPrecoCusto.Text = _produto.PrecoCusto.ToString();
                 boxPrecoVenda.Text = _produto.PrecoVenda.ToString();
-                boxAtivo.IsEnabled = _produto.Ativo;
+                boxAtivo.IsChecked = _produto.Ativo;
                 boxGrupo.Text = _produto.ProdutoGrupo.ToString();
             }
         }
 
-
         private void btnConfirmarProduto(object sender, RoutedEventArgs e)
         {
-            if (_produto == null)
+            try
             {
-                _pModel.AdicionarProduto
-                    (
-                        boxDescricao.Text,
+                if (_produto == null)
+                {
+                    // Cadastro de novo produto
+                    _pModel.AdicionarProduto(
+                        boxDescricao.Text.Trim(),
                         Enum.Parse<UnidadeMedida>(boxUnMedida.Text),
-                        boxCodBarras.Text,
+                        boxCodBarras.Text.Trim(),
                         decimal.Parse(boxPrecoCusto.Text),
                         decimal.Parse(boxPrecoVenda.Text),
-                        boxAtivo.IsEnabled,
+                        boxAtivo.IsChecked ?? false,
                         Enum.Parse<ProdutoGrupo>(boxGrupo.Text)
                     );
 
-                MessageBox.Show("Produto Adicionado com sucesso!");
-            }
-            else
-            {
-                _pModel.EditarProduto
-                    (
+                    MessageBox.Show("Produto adicionado com sucesso!");
+                }
+                else
+                {
+                    // Edição do produto existente
+                    _pModel.EditarProduto(
                         _produto.Id,
-                        boxDescricao.Text,
+                        boxDescricao.Text.Trim(),
                         Enum.Parse<UnidadeMedida>(boxUnMedida.Text),
-                        boxCodBarras.Text,
+                        boxCodBarras.Text.Trim(),
                         decimal.Parse(boxPrecoCusto.Text),
                         decimal.Parse(boxPrecoVenda.Text),
-                        boxAtivo.IsEnabled,
+                        boxAtivo.IsChecked ?? false,
                         Enum.Parse<ProdutoGrupo>(boxGrupo.Text)
                     );
 
-                MessageBox.Show("Produto Atualizado com sucesso!");
+                    MessageBox.Show("Produto atualizado com sucesso!");
+                }
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
-
     }
-       
 }

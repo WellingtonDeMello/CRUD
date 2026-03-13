@@ -22,23 +22,20 @@ namespace UI.Model
             return await _vendaRepositorio.GetAllAsync();
         }
 
-        public async Task<bool> NovaVenda(string clienteDocumento, string clienteNome, decimal total, string obs, List<Produto> produtos)
+        public async Task<bool> NovaVenda(string clienteDocumento, string clienteNome, decimal total, string obs, List<VendaProduto> produtos)
         {
-            List<VendaProduto> vendaProdutos = new List<VendaProduto>();
             Venda venda = new Venda(clienteDocumento, clienteNome, total, obs, DateTime.Now);
 
             _vendaRepositorio.Add(venda);
-            await _vendaRepositorio.SaveChangesAsync();
+            await _vendaRepositorio.SaveChangesAsync(); // salva a venda e gera o Id
 
-            foreach (Produto produto in produtos)
+            // associa cada produto à venda
+            foreach (var vp in produtos)
             {
-                vendaProdutos.Add(
-                    new VendaProduto { PrecoVenda = venda.Total, ProdutoId = produto.Id, VendaId = venda.Id }
-                    );
+                vp.VendaId = venda.Id;
             }
 
-            _vendaProdutoRepositorio.AddRange(vendaProdutos);
-
+            _vendaProdutoRepositorio.AddRange(produtos);
             return await _vendaProdutoRepositorio.SaveChangesAsync();
         }
     }

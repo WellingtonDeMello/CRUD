@@ -8,7 +8,7 @@ namespace Dominio
     public class Venda
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Column(TypeName = "nvarchar(20)")]
@@ -24,28 +24,24 @@ namespace Dominio
         [Required]
         public decimal Total { get; set; }
 
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy HH:mm:ss}")]
         [Required]
         public DateTime DataHora { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal PrecoVenda { get; set; }
 
         public List<VendaProduto> VendaProdutos { get; set; }
 
         public Venda()
         {
-
+            VendaProdutos = new List<VendaProduto>();
         }
 
-        public Venda(string clienteDocumento, string clienteNome, decimal total, string obs, DateTime dataHora, decimal precovenda = 0)
+        public Venda(string clienteDocumento, string clienteNome, decimal total, string obs, DateTime dataHora)
         {
             ClienteDocumento = clienteDocumento;
             ClienteNome = clienteNome;
             Total = total;
             Obs = obs;
             DataHora = dataHora;
-            PrecoVenda = precovenda;
+            VendaProdutos = new List<VendaProduto>();
         }
     }
 }

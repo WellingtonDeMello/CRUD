@@ -5,15 +5,104 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UI"
         mc:Ignorable="d"
-        
-        Height="270" Width="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid >
-        <TextBlock HorizontalAlignment="Center" Padding="5" FontSize="14" FontWeight="Bold" Height="34" Margin="79,22,89,0" TextWrapping="NoWrap" Text="INSIRA O NOME E O CPF DO CLIENTE" VerticalAlignment="Top" Width="274"/>
-        <Label Content="NOME: " HorizontalAlignment="Left" Margin="30,61,0,0" VerticalAlignment="Top" />
-        <TextBox Name="boxNomeCliente" MaxLength="30"  Margin="110,61,40,10" TextWrapping="NoWrap"  VerticalAlignment="Top"/>
-        <Label Content="CPF: " HorizontalAlignment="Left" Margin="26,115,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="boxCpfCliente" MaxLength="11"  Margin="110,115,40,0" TextWrapping="NoWrap" VerticalAlignment="Top"/>
-        <Button Content="Continuar Venda" FontSize="14" HorizontalAlignment="Center" Margin="125,175,124,0" VerticalAlignment="Top" Width="193" Height="37" Click="BtnContinuarVenda"/>
+
+        Height="300"
+        Width="450"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+
+        <!-- TEXTBOX ESTILO -->
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="#E5E7EB"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="8">
+                            <ScrollViewer Margin="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+        <!-- BOTÃO ESTILO -->
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"/>
+    </Window.Background>
+
+    <Grid Margin="30,11,30,-15">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- TÍTULO -->
+        <TextBlock Grid.Row="0"
+                   Text="INSIRA O NOME E O CPF DO CLIENTE"
+                   FontSize="16"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   Margin="0,0,0,25" Foreground="White"/>
+
+        <!-- NOME -->
+        <Label
+               Content="Nome do Cliente" Margin="2,41,-2,5" Grid.RowSpan="2" Foreground="White"/>
+
+        <TextBox Name="boxNomeCliente"
+                 Grid.Row="1"
+                 Margin="0,25,0,20"
+                 MaxLength="30" Background="DarkGray"/>
+
+        <!-- CPF -->
+        <Label Grid.Row="1"
+               Content="CPF" Margin="0,73,0,7" Grid.RowSpan="2" Foreground="White"/>
+
+        <TextBox Name="boxCpfCliente"
+                 Grid.Row="2"
+                 Margin="0,25,0,25"
+                 MaxLength="11" Background="DarkGray"/>
+
+        <!-- BOTÃO -->
+        <Button Grid.Row="2"
+                Content="Continuar Venda"
+                Background="#FF6900"
+                Width="200"
+                HorizontalAlignment="Left"
+                Click="BtnContinuarVenda" Margin="90,92,0,-7" Grid.RowSpan="2"/>
 
     </Grid>
 </Window>

@@ -47,12 +47,14 @@ namespace UI
                 : Visibility.Hidden;
         }
 
-     
+
 
         private void entrarButton_Click(object sender, RoutedEventArgs e)
         {
             Login logingestex = new Login();
-            logingestex.ShowDialog();
+            logingestex.Show(); // abre a tela de login
+
+            this.Close(); // fecha a tela iniciar
         }
 
         private async void btnCadastro(object sender, RoutedEventArgs e)

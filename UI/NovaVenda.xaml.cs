@@ -10,7 +10,7 @@ namespace UI
     public partial class NovaVenda : Window
     {
         VendaModel vModel = new VendaModel();
-        List<Produto> produtos = new List<Produto>();
+        List<VendaProduto> produtos = new List<VendaProduto>();
 
         public NovaVenda(string nomeCliente, string cpfCliente)
         {
@@ -84,7 +84,13 @@ namespace UI
                     return;
                 }
 
-                produtos.Add(produto);
+                VendaProduto vendaProduto = new VendaProduto();
+                vendaProduto.ProdutoId = produto.Id;
+                vendaProduto.Produto = produto;
+                vendaProduto.Quantidade = quantidade;
+                vendaProduto.PrecoVenda = produto.PrecoVenda;
+
+                produtos.Add(vendaProduto);
 
                 NovaVendaCollection vendas = new NovaVendaCollection(
                     produto.Id,
@@ -93,7 +99,6 @@ namespace UI
                     produto.PrecoVenda,
                     quantidade
                 );
-
                 gridVendaProduto.Items.Add(vendas);
 
                 decimal totalAtual = decimal.Parse(blockTotal.Text);
@@ -114,37 +119,32 @@ namespace UI
                 return;
             }
 
+            // Criar lista de VendaProduto
+            List<VendaProduto> vendaProdutos = new List<VendaProduto>();
+
+            foreach (var p in produtos)
+            {
+                vendaProdutos.Add(new VendaProduto
+                {
+                    ProdutoId = p.ProdutoId,       // apenas o Id
+                    PrecoVenda = p.PrecoVenda,     // preço do produto
+                    Quantidade = p.Quantidade  // quantidade vendida
+                });
+            }
+
+            // Chama o model para salvar a venda
             bool status = await vModel.NovaVenda(
                 blockCpfCliente.Text,
                 blockNomeCliente.Text,
                 decimal.Parse(blockTotal.Text),
                 boxObs.Text,
-                produtos
+                vendaProdutos // passe VendaProduto, não Produto
             );
 
-            if (status == true)
+            if (status)
             {
                 MessageBox.Show("Venda cadastrada com sucesso!");
                 Close();
-
-                MessageBoxResult result = MessageBox.Show(
-                    "Deseja incluir nome e cpf do cliente?",
-                    "Nome e CPF do Cliente",
-                    MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Question);
-
-                switch (result)
-                {
-                    case MessageBoxResult.Yes:
-                        NomeCpf nomeCpf = new NomeCpf();
-                        nomeCpf.ShowDialog();
-                        break;
-
-                    case MessageBoxResult.No:
-                        NovaVenda novaVenda = new NovaVenda("Não informado", "Não informado");
-                        novaVenda.ShowDialog();
-                        break;
-                }
             }
             else
             {
