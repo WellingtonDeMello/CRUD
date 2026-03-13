@@ -28,17 +28,7 @@ namespace UI
             areaDinheiro.Visibility = Visibility.Collapsed;
         }
 
-        private void PagamentoDebito(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Pagamento no débito aprovado!");
-            FinalizarVenda(null, null);
-        }
-
-        private void PagamentoCredito(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Pagamento no crédito aprovado!");
-            FinalizarVenda(null, null);
-        }
+        
 
         private void CalcularTroco(object sender, TextChangedEventArgs e)
         {
