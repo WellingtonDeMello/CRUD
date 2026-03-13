@@ -154,7 +154,7 @@
 
                 <TextBox x:Name="boxQuantidade"
                          Height="40"
-                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228"/>
+                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228" TextChanged="boxQuantidade_TextChanged"/>
 
             </StackPanel>
 

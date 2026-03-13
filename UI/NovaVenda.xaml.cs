@@ -12,12 +12,19 @@ namespace UI
         VendaModel vModel = new VendaModel();
         List<VendaProduto> produtos = new List<VendaProduto>();
 
+        decimal totalVenda = 0;
+
         public NovaVenda(string nomeCliente, string cpfCliente)
         {
             InitializeComponent();
+
             blockNomeCliente.Text = nomeCliente;
             blockCpfCliente.Text = cpfCliente;
+
+            blockTotal.Text = "0";
         }
+
+        // ===================== BUSCAR PRODUTO =====================
 
         private async void boxCodProduto_KeyUp(object sender, KeyEventArgs e)
         {
@@ -29,9 +36,7 @@ namespace UI
                     return;
                 }
 
-                int codigoProduto;
-
-                if (!int.TryParse(boxCodProduto.Text, out codigoProduto))
+                if (!int.TryParse(boxCodProduto.Text, out int codigoProduto))
                 {
                     MessageBox.Show("Código inválido!");
                     return;
@@ -51,26 +56,26 @@ namespace UI
             }
         }
 
+        // ===================== ADICIONAR PRODUTO =====================
+
         private async void boxQuantidade_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                if (string.IsNullOrWhiteSpace(boxCodProduto.Text) || string.IsNullOrWhiteSpace(boxQuantidade.Text))
+                if (string.IsNullOrWhiteSpace(boxCodProduto.Text) ||
+                    string.IsNullOrWhiteSpace(boxQuantidade.Text))
                 {
                     MessageBox.Show("Digite o código e a quantidade!");
                     return;
                 }
 
-                int codigoProduto;
-                int quantidade;
-
-                if (!int.TryParse(boxCodProduto.Text, out codigoProduto))
+                if (!int.TryParse(boxCodProduto.Text, out int codigoProduto))
                 {
                     MessageBox.Show("Código inválido!");
                     return;
                 }
 
-                if (!int.TryParse(boxQuantidade.Text, out quantidade))
+                if (!int.TryParse(boxQuantidade.Text, out int quantidade))
                 {
                     MessageBox.Show("Quantidade inválida!");
                     return;
@@ -84,32 +89,38 @@ namespace UI
                     return;
                 }
 
-                VendaProduto vendaProduto = new VendaProduto();
-                vendaProduto.ProdutoId = produto.Id;
-                vendaProduto.Produto = produto;
-                vendaProduto.Quantidade = quantidade;
-                vendaProduto.PrecoVenda = produto.PrecoVenda;
+                VendaProduto vendaProduto = new VendaProduto
+                {
+                    ProdutoId = produto.Id,
+                    Produto = produto,
+                    Quantidade = quantidade,
+                    PrecoVenda = produto.PrecoVenda
+                };
 
                 produtos.Add(vendaProduto);
 
-                NovaVendaCollection vendas = new NovaVendaCollection(
+                NovaVendaCollection vendaGrid = new NovaVendaCollection(
                     produto.Id,
                     produto.Descricao,
                     produto.UnidadeDeMedida,
                     produto.PrecoVenda,
                     quantidade
                 );
-                gridVendaProduto.Items.Add(vendas);
 
-                decimal totalAtual = decimal.Parse(blockTotal.Text);
-                blockTotal.Text = (totalAtual + vendas.Total).ToString();
+                gridVendaProduto.Items.Add(vendaGrid);
+
+                totalVenda += vendaGrid.Total;
+                blockTotal.Text = totalVenda.ToString("F2");
 
                 // limpar campos
                 boxCodProduto.Text = "";
                 boxQuantidade.Text = "";
                 blockNomeProduto.Text = "PRODUTO PESQUISADO";
+                boxCodProduto.Focus();
             }
         }
+
+        // ===================== CONFIRMAR VENDA =====================
 
         private async void btnConfirmarVenda(object sender, RoutedEventArgs e)
         {
@@ -119,26 +130,29 @@ namespace UI
                 return;
             }
 
-            // Criar lista de VendaProduto
+            // abrir tela de pagamento
+            FormaPagamento pagamento = new FormaPagamento(totalVenda);
+            pagamento.ShowDialog();
+
+            // montar lista final
             List<VendaProduto> vendaProdutos = new List<VendaProduto>();
 
             foreach (var p in produtos)
             {
                 vendaProdutos.Add(new VendaProduto
                 {
-                    ProdutoId = p.ProdutoId,       // apenas o Id
-                    PrecoVenda = p.PrecoVenda,     // preço do produto
-                    Quantidade = p.Quantidade  // quantidade vendida
+                    ProdutoId = p.ProdutoId,
+                    PrecoVenda = p.PrecoVenda,
+                    Quantidade = p.Quantidade
                 });
             }
 
-            // Chama o model para salvar a venda
             bool status = await vModel.NovaVenda(
                 blockCpfCliente.Text,
                 blockNomeCliente.Text,
-                decimal.Parse(blockTotal.Text),
+                totalVenda,
                 boxObs.Text,
-                vendaProdutos // passe VendaProduto, não Produto
+                vendaProdutos
             );
 
             if (status)
@@ -148,7 +162,9 @@ namespace UI
             }
             else
             {
-                MessageBox.Show("Erro ao cadastrar venda!", "ERRO", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Erro ao cadastrar venda!", "ERRO",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
             }
         }
 
@@ -156,7 +172,14 @@ namespace UI
         {
 
         }
+
+        private void boxQuantidade_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
+
+    // ===================== CLASSE DA GRID =====================
 
     class NovaVendaCollection
     {
@@ -167,7 +190,12 @@ namespace UI
         public int QuantidadeProduto { get; set; }
         public decimal Total { get; set; }
 
-        public NovaVendaCollection(int produtoId, string produtoNome, UnidadeMedida unidadeDeMedida, decimal precoVenda, int quantidadeProduto)
+        public NovaVendaCollection(
+            int produtoId,
+            string produtoNome,
+            UnidadeMedida unidadeDeMedida,
+            decimal precoVenda,
+            int quantidadeProduto)
         {
             ProdutoId = produtoId;
             ProdutoNome = produtoNome;

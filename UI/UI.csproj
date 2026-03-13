@@ -16,6 +16,7 @@
     <None Remove="key.png" />
     <None Remove="mail.png" />
     <None Remove="pngtree-background-design-with-abstract-shapes-in-white-orange-and-blue-colors-image_632657.jpg" />
+    <None Remove="Qrcode_wikipedia.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -46,6 +47,7 @@
     <Resource Include="key.png" />
     <Resource Include="mail.png" />
     <Resource Include="pngtree-background-design-with-abstract-shapes-in-white-orange-and-blue-colors-image_632657.jpg" />
+    <Resource Include="Qrcode_wikipedia.jpg" />
   </ItemGroup>
 
 </Project>
