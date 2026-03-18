@@ -1,0 +1,148 @@
+﻿<Window x:Class="UI.NovoFornecedor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Fornecedor"
+        Height="550"
+        Width="650"
+        MinHeight="500"
+        MinWidth="550"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize">
+
+    <!-- 🎨 FUNDO -->
+    <Window.Background>
+        <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"
+                    Stretch="UniformToFill"/>
+    </Window.Background>
+
+    <!-- 🎨 ESTILOS -->
+    <Window.Resources>
+
+        <!-- TextBox moderno -->
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#444"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="10"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12"
+                                BorderBrush="Transparent"
+                                BorderThickness="2">
+
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#FF6900"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Botão moderno -->
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#FF6900"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="btn"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="btn" Property="Background" Value="#FF8C42"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="btn" Property="Background" Value="#E65C00"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <!-- 🧱 LAYOUT -->
+    <Grid>
+
+        <!-- overlay escuro -->
+        <Border>
+            <Border.Background>
+                <ImageBrush/>
+            </Border.Background>
+        </Border>
+
+        <Grid Margin="40">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- 📜 CAMPOS -->
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+
+                <StackPanel>
+
+                    <TextBlock Text="Cadastro de Fornecedor"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="White"
+                               Margin="0,0,0,25"/>
+
+                    <TextBlock Text="Nome" Foreground="White"/>
+                    <TextBox x:Name="txtNome" Margin="0,5,0,15"/>
+
+                    <TextBlock Text="CNPJ" Foreground="White"/>
+                    <TextBox x:Name="txtCnpj"
+                             PreviewTextInput="NumeroSomente"
+                             Margin="0,5,0,15"/>
+
+                    <TextBlock Text="Telefone" Foreground="White"/>
+                    <TextBox x:Name="txtTelefone"
+                             PreviewTextInput="NumeroSomente"
+                             Margin="0,5,0,15"/>
+
+                    <TextBlock Text="Email" Foreground="White"/>
+                    <TextBox x:Name="txtEmail" Margin="0,5,0,15"/>
+
+                </StackPanel>
+
+            </ScrollViewer>
+
+            <!-- 🔥 BOTÃO FIXO -->
+            <Button Grid.Row="1"
+                    Content="Salvar"
+                    Margin="0,20,0,0"
+                    Click="SalvarFornecedor"/>
+
+        </Grid>
+
+    </Grid>
+
+</Window>

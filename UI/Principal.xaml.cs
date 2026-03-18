@@ -6,65 +6,102 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using UI.Model;
+using UI.Utils;
 
 namespace UI
 {
     public partial class Principal : Window
     {
+        // Guarda o tipo do usuário logado (Admin ou Funcionario)
         private string tipoUsuarioAtual;
 
         public Principal(string usuarioAtual, string tipoUsuario)
         {
             InitializeComponent();
 
+            // Exibe usuário logado no topo da tela
             BoxUsuarioAtual.Text = $"{usuarioAtual} ({tipoUsuario})";
+
+            // Define tipo para controle de permissões
             tipoUsuarioAtual = tipoUsuario;
         }
 
+        // ===================== CONTROLE DE BOTÕES (MENU LATERAL) =====================
+
+        // Reseta todos os botões para cor padrão 
+        private void ResetarBotoes()
+        {
+            var corPadrao = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
+
+            BtnProdutos.Background = corPadrao;
+            BtnVendas.Background = corPadrao;
+            BtnUsuarios.Background = corPadrao;
+            BtnFornecedores.Background = corPadrao;
+        }
+
         // ===================== MOSTRAR PAINÉIS =====================
+
+        private void MostrarProdutos(object sender, RoutedEventArgs e)
+        {
+            ResetarBotoes(); // remove seleção anterior
+
+            // destaca botão ativo
+            BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
+
+            // exibe painel correto
+            PainelProdutos.Visibility = Visibility.Visible;
+
+            // oculta os outros
+            PainelVendas.Visibility = Visibility.Collapsed;
+            PainelUsuarios.Visibility = Visibility.Collapsed;
+            PainelFornecedores.Visibility = Visibility.Collapsed;
+        }
+
+        private void MostrarVendas(object sender, RoutedEventArgs e)
+        {
+            ResetarBotoes();
+            BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
+
+            PainelVendas.Visibility = Visibility.Visible;
+            PainelProdutos.Visibility = Visibility.Collapsed;
+            PainelUsuarios.Visibility = Visibility.Collapsed;
+            PainelFornecedores.Visibility = Visibility.Collapsed;
+        }
+
         private void MostrarUsuarios(object sender, RoutedEventArgs e)
         {
+            // Controle de acesso: apenas Admin pode acessar usuários
             if (tipoUsuarioAtual != "Admin")
             {
                 MessageBox.Show("Apenas administradores podem acessar usuários.");
                 return;
             }
 
+            ResetarBotoes();
+            BtnUsuarios.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
+
             PainelUsuarios.Visibility = Visibility.Visible;
             PainelProdutos.Visibility = Visibility.Collapsed;
             PainelVendas.Visibility = Visibility.Collapsed;
-
-            BtnUsuarios.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
-            BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-            BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
+            PainelFornecedores.Visibility = Visibility.Collapsed;
         }
 
-        private void MostrarProdutos(object sender, RoutedEventArgs e)
+        private void MostrarFornecedores(object sender, RoutedEventArgs e)
         {
-            PainelProdutos.Visibility = Visibility.Visible;
+            ResetarBotoes();
+            BtnFornecedores.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
+
+            PainelFornecedores.Visibility = Visibility.Visible;
+            PainelProdutos.Visibility = Visibility.Collapsed;
             PainelVendas.Visibility = Visibility.Collapsed;
             PainelUsuarios.Visibility = Visibility.Collapsed;
-
-            BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
-            BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-            BtnUsuarios.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-        }
-
-        private void MostrarVendas(object sender, RoutedEventArgs e)
-        {
-            PainelVendas.Visibility = Visibility.Visible;
-            PainelProdutos.Visibility = Visibility.Collapsed;
-            PainelUsuarios.Visibility = Visibility.Collapsed;
-
-            BtnVendas.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6900"));
-            BtnProdutos.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
-            BtnUsuarios.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#374151"));
         }
 
         // ===================== USUÁRIOS =====================
-      
+
         private void BtnConsultarUsuarios_Click(object sender, RoutedEventArgs e)
         {
+            // Busca todos os usuários no banco e exibe no grid
             using (var context = new Context())
             {
                 gridUsuarios.ItemsSource = context.Usuarios.ToList();
@@ -73,17 +110,39 @@ namespace UI
 
         private void BtnSalvarUsuario_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNomeUsuario.Text) ||
-                string.IsNullOrWhiteSpace(txtEmailUsuario.Text) ||
-                string.IsNullOrWhiteSpace(txtSenhaUsuario.Password) ||
-                comboTipoUsuario.SelectedItem == null)
+            // Validação
+            if (Validacoes.CampoVazio(txtNomeUsuario.Text) ||
+                Validacoes.CampoVazio(txtEmailUsuario.Text) ||
+                Validacoes.CampoVazio(txtSenhaUsuario.Password))
             {
                 MessageBox.Show("Preencha todos os campos.");
                 return;
             }
 
+            // Validação do email
+            if (!Validacoes.EmailValido(txtEmailUsuario.Text))
+            {
+                MessageBox.Show("Email inválido.");
+                return;
+            }
+
+            // Validação de seleção do tipo de usuário
+            if (comboTipoUsuario.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione o tipo de usuário.");
+                return;
+            }
+
             using (var context = new Context())
             {
+                //não permitir email duplicado
+                if (context.Usuarios.Any(u => u.Email == txtEmailUsuario.Text))
+                {
+                    MessageBox.Show("Já existe um usuário com este email.");
+                    return;
+                }
+
+                // Criação do objeto usuário
                 Usuario u = new Usuario
                 {
                     Nome = txtNomeUsuario.Text.Trim(),
@@ -98,17 +157,18 @@ namespace UI
 
             MessageBox.Show("Usuário criado com sucesso!");
 
-          
-
-            // Limpar campos
+            //limpa os campos após salvar
             txtNomeUsuario.Clear();
             txtEmailUsuario.Clear();
             txtSenhaUsuario.Clear();
             comboTipoUsuario.SelectedIndex = -1;
+
+            BtnConsultarUsuarios_Click(null, null);
         }
 
         private void BtnExcluirUsuario_Click(object sender, RoutedEventArgs e)
         {
+            
             if (gridUsuarios.SelectedItem == null)
             {
                 MessageBox.Show("Selecione um usuário.");
@@ -117,63 +177,9 @@ namespace UI
 
             var usuario = (Usuario)gridUsuarios.SelectedItem;
 
-            var confirm = MessageBox.Show(
-                "Deseja excluir este usuário?",
-                "Confirmar",
-                MessageBoxButton.YesNo);
-
-            if (confirm != MessageBoxResult.Yes)
-                return;
-
-            using (var context = new Context())
-            {
-                context.Usuarios.Remove(usuario);
-                context.SaveChanges();
-            }
-
-            MessageBox.Show("Usuário excluído.");
-            BtnConsultarUsuarios_Click(null, null);
-        }
-
-        private void BtnEditarUsuario_Click(object sender, RoutedEventArgs e)
-        {
-            if (gridUsuarios.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione um usuário.");
-                return;
-            }
-
-            var usuario = (Usuario)gridUsuarios.SelectedItem;
-
-            // Preencher a telinha com os dados existentes
-            txtNomeUsuario.Text = usuario.Nome;
-            txtEmailUsuario.Text = usuario.Email;
-            txtSenhaUsuario.Password = ""; // Sempre pedir nova senha
-            comboTipoUsuario.SelectedItem = comboTipoUsuario.Items.Cast<ComboBoxItem>()
-                                             .FirstOrDefault(i => i.Content.ToString() == usuario.TipoUsuario);
-
-           
-
-            // Ao salvar, você pode diferenciar edição de criação pelo ID (isso precisaria de um campo auxiliar se quiser editar)
-        }
-
-        private void BtnExcluirUsuarioo_Click(object sender, RoutedEventArgs e)
-        {
-            if (gridUsuarios.SelectedItem == null)
-            {
-                MessageBox.Show("Selecione um usuário.");
-                return;
-            }
-
-            var usuario = (Usuario)gridUsuarios.SelectedItem;
-
-            var confirm = MessageBox.Show(
-                "Deseja excluir este usuário?",
-                "Confirmar",
-                MessageBoxButton.YesNo);
-
-            if (confirm != MessageBoxResult.Yes)
-                return;
+            
+            var confirm = MessageBox.Show("Deseja excluir este usuário?", "Confirmar", MessageBoxButton.YesNo);
+            if (confirm != MessageBoxResult.Yes) return;
 
             using (var context = new Context())
             {
@@ -186,64 +192,58 @@ namespace UI
         }
 
         // ===================== PRODUTOS =====================
+
         private void BtnCadastroProduto(object sender, RoutedEventArgs e)
         {
+            
             if (tipoUsuarioAtual == "Funcionario")
             {
                 MessageBox.Show("Funcionários não podem cadastrar produtos.");
                 return;
             }
 
-            NovoProduto novoProduto = new NovoProduto();
-            novoProduto.ShowDialog();
+            new NovoProduto().ShowDialog();
+
+            
+            BtnConsultarProduto(null, null);
         }
 
         private void btnEditarProduto(object sender, RoutedEventArgs e)
         {
-            if (tipoUsuarioAtual == "Funcionario")
+            if (gridProdutos.SelectedItem == null)
             {
-                MessageBox.Show("Funcionários não podem editar produtos.");
+                MessageBox.Show("Selecione um produto.");
                 return;
             }
 
-            Produto produto = (Produto)gridProdutos.SelectedItem;
+            // Abre tela passando produto selecionado
+            new NovoProduto((Produto)gridProdutos.SelectedItem).ShowDialog();
 
-            if (produto != null)
-            {
-                NovoProduto novoProduto = new NovoProduto(produto);
-                novoProduto.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Selecione um produto.");
-            }
+            BtnConsultarProduto(null, null);
         }
 
         private async void BtnConsultarProduto(object sender, RoutedEventArgs e)
         {
-            ProdutoModel _pModel = new ProdutoModel();
-            gridProdutos.ItemsSource = await _pModel.ListarProdutos();
+           
+            ProdutoModel model = new ProdutoModel();
+            gridProdutos.ItemsSource = await model.ListarProdutos();
         }
 
         private void BtnExcluirProduto(object sender, RoutedEventArgs e)
         {
-            if (tipoUsuarioAtual == "Funcionario")
-            {
-                MessageBox.Show("Funcionários não podem excluir produtos.");
-                return;
-            }
-
             if (gridProdutos.SelectedItem == null)
             {
-                MessageBox.Show("Selecione um produto para excluir.");
+                MessageBox.Show("Selecione um produto.");
                 return;
             }
 
-            var produtoSelecionado = (Produto)gridProdutos.SelectedItem;
+            var confirm = MessageBox.Show("Deseja excluir este produto?", "Confirmar", MessageBoxButton.YesNo);
+            if (confirm != MessageBoxResult.Yes) return;
 
             using (var context = new Context())
             {
-                var produto = context.Produtos.Find(produtoSelecionado.Id);
+                var produto = context.Produtos.Find(((Produto)gridProdutos.SelectedItem).Id);
+
                 if (produto != null)
                 {
                     context.Produtos.Remove(produto);
@@ -251,37 +251,29 @@ namespace UI
                 }
             }
 
-            MessageBox.Show("Produto excluído com sucesso!");
+            MessageBox.Show("Produto excluído!");
             BtnConsultarProduto(null, null);
         }
 
         // ===================== VENDAS =====================
+
         private void BtnNovaVendaDialog(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show(
-                "Deseja incluir nome e CPF do cliente?",
-                "Nome e CPF do Cliente",
-                MessageBoxButton.YesNoCancel,
-                MessageBoxImage.Question);
+            // Abre tela para informar cliente
+            ClienteDialog dialog = new ClienteDialog();
 
-            switch (result)
+            // Se usuário confirmou, abre tela de venda
+            if (dialog.ShowDialog() == true)
             {
-                case MessageBoxResult.Yes:
-                    NomeCpf nomeCpf = new NomeCpf();
-                    nomeCpf.ShowDialog();
-                    break;
-
-                case MessageBoxResult.No:
-                    NovaVenda novaVenda = new NovaVenda("Não informado", "Não informado");
-                    novaVenda.ShowDialog();
-                    break;
+                new NovaVenda(dialog.NomeCliente, dialog.CpfCliente).ShowDialog();
             }
         }
 
-        private async void BtnConsultarVenda(object sender, RoutedEventArgs e)
+        private void BtnConsultarVenda(object sender, RoutedEventArgs e)
         {
             using (var context = new Context())
             {
+                // Carrega vendas + produtos relacionados (Include)
                 gridVendas.ItemsSource = context.Vendas
                     .Include(v => v.VendaProdutos)
                     .ThenInclude(vp => vp.Produto)
@@ -293,17 +285,16 @@ namespace UI
         {
             if (gridVendas.SelectedItem == null) return;
 
-            var vendaSelecionada = (Venda)gridVendas.SelectedItem;
-
             using (var context = new Context())
             {
-                var vendaCompleta = context.Vendas
+                // Busca venda completa com produtos
+                var venda = context.Vendas
                     .Include(v => v.VendaProdutos)
                     .ThenInclude(vp => vp.Produto)
-                    .FirstOrDefault(v => v.Id == vendaSelecionada.Id);
+                    .FirstOrDefault(v => v.Id == ((Venda)gridVendas.SelectedItem).Id);
 
-                if (vendaCompleta != null)
-                    gridVendaProdutos.ItemsSource = vendaCompleta.VendaProdutos;
+                // Exibe produtos da venda
+                gridVendaProdutos.ItemsSource = venda?.VendaProdutos;
             }
         }
 
@@ -311,36 +302,20 @@ namespace UI
         {
             if (gridVendas.SelectedItem == null)
             {
-                MessageBox.Show("Selecione uma venda para excluir.");
+                MessageBox.Show("Selecione uma venda.");
                 return;
             }
 
-            var vendaSelecionada = (Venda)gridVendas.SelectedItem;
-
-            var confirmacao = MessageBox.Show(
-                "Tem certeza que deseja excluir esta venda?",
-                "Confirmar Exclusão",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Warning);
-
-            if (confirmacao != MessageBoxResult.Yes)
-                return;
+            var confirm = MessageBox.Show("Deseja excluir esta venda?", "Confirmar", MessageBoxButton.YesNo);
+            if (confirm != MessageBoxResult.Yes) return;
 
             using (var context = new Context())
             {
-                var venda = context.Vendas
-                    .Include(v => v.VendaProdutos)
-                    .FirstOrDefault(v => v.Id == vendaSelecionada.Id);
-
-                if (venda != null)
-                {
-                    context.VendaProdutos.RemoveRange(venda.VendaProdutos);
-                    context.Vendas.Remove(venda);
-                    context.SaveChanges();
-                }
+                context.Vendas.Remove((Venda)gridVendas.SelectedItem);
+                context.SaveChanges();
             }
 
-            MessageBox.Show("Venda excluída com sucesso!");
+            MessageBox.Show("Venda excluída!");
             BtnConsultarVenda(null, null);
         }
 
@@ -348,14 +323,65 @@ namespace UI
         {
             if (gridVendas.SelectedItem == null)
             {
-                MessageBox.Show("Selecione uma venda para editar.");
+                MessageBox.Show("Selecione uma venda.");
                 return;
             }
 
-            var vendaSelecionada = (Venda)gridVendas.SelectedItem;
-            EditarVenda tela = new EditarVenda(vendaSelecionada);
-            tela.ShowDialog();
+            // Abre tela de edição da venda
+            new EditarVenda((Venda)gridVendas.SelectedItem).ShowDialog();
+
             BtnConsultarVenda(null, null);
+        }
+
+        // ===================== FORNECEDORES =====================
+
+        private void BtnConsultarFornecedor(object sender, RoutedEventArgs e)
+        {
+            using (var context = new Context())
+            {
+                gridFornecedores.ItemsSource = context.Fornecedores.ToList();
+            }
+        }
+
+        private void BtnCadastrarFornecedor(object sender, RoutedEventArgs e)
+        {
+            new NovoFornecedor().ShowDialog();
+
+            BtnConsultarFornecedor(null, null);
+        }
+
+        private void BtnEditarFornecedor(object sender, RoutedEventArgs e)
+        {
+            if (gridFornecedores.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um fornecedor.");
+                return;
+            }
+
+            new NovoFornecedor((Fornecedor)gridFornecedores.SelectedItem).ShowDialog();
+
+            BtnConsultarFornecedor(null, null);
+        }
+
+        private void BtnExcluirFornecedor(object sender, RoutedEventArgs e)
+        {
+            if (gridFornecedores.SelectedItem == null)
+            {
+                MessageBox.Show("Selecione um fornecedor.");
+                return;
+            }
+
+            var confirm = MessageBox.Show("Deseja excluir este fornecedor?", "Confirmar", MessageBoxButton.YesNo);
+            if (confirm != MessageBoxResult.Yes) return;
+
+            using (var context = new Context())
+            {
+                context.Fornecedores.Remove((Fornecedor)gridFornecedores.SelectedItem);
+                context.SaveChanges();
+            }
+
+            MessageBox.Show("Fornecedor excluído!");
+            BtnConsultarFornecedor(null, null);
         }
     }
 }

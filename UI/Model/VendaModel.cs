@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Microsoft.EntityFrameworkCore;
 using Repositorio;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,15 @@ namespace UI.Model
 
             _vendaProdutoRepositorio.AddRange(produtos);
             return await _vendaProdutoRepositorio.SaveChangesAsync();
+        }
+
+        public async Task<Produto> ProcurarProdutoNome(string nome)
+        {
+            using (var context = new Context())
+            {
+                return await context.Produtos
+                    .FirstOrDefaultAsync(p => p.Descricao.Contains(nome));
+            }
         }
     }
 }

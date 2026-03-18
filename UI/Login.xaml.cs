@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using UI.Model;
+using UI.Utils;
 
 namespace UI
 {
@@ -30,6 +31,8 @@ namespace UI
 
         private async void btnEntrar(object sender, RoutedEventArgs e)
         {
+
+
             IsEnabled = false;
 
             UsuarioModel uModel = new UsuarioModel();

@@ -4,23 +4,33 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using UI.Model;
+using UI.Utils;
 
 namespace UI
 {
     public partial class NovaVenda : Window
     {
+        // Model responsável pelas regras de negócio da venda (acesso ao banco)
         VendaModel vModel = new VendaModel();
+
+        // Lista produtos adicionados na venda
         List<VendaProduto> produtos = new List<VendaProduto>();
 
+        // Guardar o total da venda
         decimal totalVenda = 0;
+
+        
+        Produto produtoSelecionado = null;
 
         public NovaVenda(string nomeCliente, string cpfCliente)
         {
             InitializeComponent();
 
+            //Pedir Dados do Cliente
             blockNomeCliente.Text = nomeCliente;
             blockCpfCliente.Text = cpfCliente;
 
+            // Inicializa total como zero
             blockTotal.Text = "0";
         }
 
@@ -28,30 +38,40 @@ namespace UI
 
         private async void boxCodProduto_KeyUp(object sender, KeyEventArgs e)
         {
+            // Executa apenas quando o usuário pressiona enter
             if (e.Key == Key.Enter)
             {
+                // não permite buscar vazio
                 if (string.IsNullOrWhiteSpace(boxCodProduto.Text))
                 {
-                    MessageBox.Show("Digite um código de produto!");
+                    MessageBox.Show("Digite o código ou nome do produto!");
                     return;
                 }
 
-                if (!int.TryParse(boxCodProduto.Text, out int codigoProduto))
+                Produto produto = null;
+
+                // Se for número, busca por ID
+                if (int.TryParse(boxCodProduto.Text, out int codigo))
                 {
-                    MessageBox.Show("Código inválido!");
-                    return;
+                    produto = await vModel.ProcurarProduto(codigo);
+                }
+                else
+                {
+                    // Caso contrário, busca por nome
+                    produto = await vModel.ProcurarProdutoNome(boxCodProduto.Text);
                 }
 
-                var produto = await vModel.ProcurarProduto(codigoProduto);
-
+                //encontrou produto
                 if (produto != null)
                 {
+                    produtoSelecionado = produto;
                     blockNomeProduto.Text = produto.Descricao;
                 }
                 else
                 {
+                    //não encontrou
+                    produtoSelecionado = null;
                     blockNomeProduto.Text = "Produto não encontrado";
-                    MessageBox.Show("Produto não encontrado!");
                 }
             }
         }
@@ -60,63 +80,56 @@ namespace UI
 
         private async void boxQuantidade_KeyUp(object sender, KeyEventArgs e)
         {
+            // Executa ao pressionar enter
             if (e.Key == Key.Enter)
             {
-                if (string.IsNullOrWhiteSpace(boxCodProduto.Text) ||
-                    string.IsNullOrWhiteSpace(boxQuantidade.Text))
+                // Impede adicionar sem selecionar produto
+                if (produtoSelecionado == null)
                 {
-                    MessageBox.Show("Digite o código e a quantidade!");
+                    MessageBox.Show("Busque um produto primeiro!");
                     return;
                 }
 
-                if (!int.TryParse(boxCodProduto.Text, out int codigoProduto))
-                {
-                    MessageBox.Show("Código inválido!");
-                    return;
-                }
-
+                // Valida se quantidade é número
                 if (!int.TryParse(boxQuantidade.Text, out int quantidade))
                 {
                     MessageBox.Show("Quantidade inválida!");
                     return;
                 }
 
-                Produto produto = await vModel.ProcurarProduto(codigoProduto);
-
-                if (produto == null)
-                {
-                    MessageBox.Show("Produto não encontrado!");
-                    return;
-                }
-
+                // Cria objeto que será salvo no banco
                 VendaProduto vendaProduto = new VendaProduto
                 {
-                    ProdutoId = produto.Id,
-                    Produto = produto,
+                    ProdutoId = produtoSelecionado.Id,
+                    Produto = produtoSelecionado,
                     Quantidade = quantidade,
-                    PrecoVenda = produto.PrecoVenda
+                    PrecoVenda = produtoSelecionado.PrecoVenda
                 };
 
+                // Adiciona na lista da venda
                 produtos.Add(vendaProduto);
 
-                NovaVendaCollection vendaGrid = new NovaVendaCollection(
-                    produto.Id,
-                    produto.Descricao,
-                    produto.UnidadeDeMedida,
-                    produto.PrecoVenda,
+                // Cria objeto para exibição na grid
+                NovaVendaCollection vendas = new NovaVendaCollection(
+                    produtoSelecionado.Id,
+                    produtoSelecionado.Descricao,
+                    produtoSelecionado.UnidadeDeMedida,
+                    produtoSelecionado.PrecoVenda,
                     quantidade
                 );
 
-                gridVendaProduto.Items.Add(vendaGrid);
+                // Adiciona na tabela visual
+                gridVendaProduto.Items.Add(vendas);
 
-                totalVenda += vendaGrid.Total;
-                blockTotal.Text = totalVenda.ToString("F2");
+                // Atualiza o total da venda somando o novo item
+                decimal totalAtual = decimal.Parse(blockTotal.Text);
+                blockTotal.Text = (totalAtual + vendas.Total).ToString();
 
-                // limpar campos
+                // Limpa os campos
                 boxCodProduto.Text = "";
                 boxQuantidade.Text = "";
                 blockNomeProduto.Text = "PRODUTO PESQUISADO";
-                boxCodProduto.Focus();
+                produtoSelecionado = null;
             }
         }
 
@@ -124,19 +137,24 @@ namespace UI
 
         private async void btnConfirmarVenda(object sender, RoutedEventArgs e)
         {
+            // Validação que impede finalizar venda sem produtos
             if (produtos.Count == 0)
             {
                 MessageBox.Show("Adicione produtos antes de confirmar a venda!");
                 return;
             }
 
-            // abrir tela de pagamento
+            // Converte total da tela para decimal
+            decimal totalVenda = decimal.Parse(blockTotal.Text);
+
+            // Abre tela de pagamento passando o total da venda
             FormaPagamento pagamento = new FormaPagamento(totalVenda);
             pagamento.ShowDialog();
 
-            // montar lista final
+            // Cria lista final que será enviada ao banco
             List<VendaProduto> vendaProdutos = new List<VendaProduto>();
 
+            // Copia apenas os dados necessários
             foreach (var p in produtos)
             {
                 vendaProdutos.Add(new VendaProduto
@@ -147,6 +165,7 @@ namespace UI
                 });
             }
 
+            // Envia dados da venda para o banco
             bool status = await vModel.NovaVenda(
                 blockCpfCliente.Text,
                 blockNomeCliente.Text,
@@ -155,6 +174,7 @@ namespace UI
                 vendaProdutos
             );
 
+            
             if (status)
             {
                 MessageBox.Show("Venda cadastrada com sucesso!");
@@ -162,20 +182,8 @@ namespace UI
             }
             else
             {
-                MessageBox.Show("Erro ao cadastrar venda!", "ERRO",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
+                MessageBox.Show("Erro ao cadastrar venda!");
             }
-        }
-
-        private void gridVendaProduto_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void boxQuantidade_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
         }
     }
 
@@ -183,6 +191,7 @@ namespace UI
 
     class NovaVendaCollection
     {
+        // Dados exibidos na tabela (interface)
         public int ProdutoId { get; set; }
         public string ProdutoNome { get; set; }
         public UnidadeMedida UnidadeDeMedida { get; set; }
@@ -202,6 +211,8 @@ namespace UI
             UnidadeDeMedida = unidadeDeMedida;
             PrecoVenda = precoVenda;
             QuantidadeProduto = quantidadeProduto;
+
+            // Calcula o total do item
             Total = quantidadeProduto * precoVenda;
         }
     }

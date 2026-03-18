@@ -2,6 +2,7 @@
 using Repositorio;
 using System.Linq;
 using System.Windows;
+using UI.Utils;
 
 namespace UI
 {

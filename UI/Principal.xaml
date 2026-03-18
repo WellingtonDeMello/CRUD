@@ -95,6 +95,13 @@
                         Background="#374151"
                         Click="MostrarUsuarios"/>
 
+                <Button x:Name="BtnFornecedores"
+                        Content="Fornecedores"
+                        Height="50"
+                        Margin="0,10"
+                        Background="#374151"
+                        Click="MostrarFornecedores"/>
+
             </StackPanel>
 
         </Border>
@@ -109,6 +116,7 @@
             <Grid Margin="30">
 
                 <!-- ================= PRODUTOS ================= -->
+
                 <Border x:Name="PainelProdutos"
                         Background="#CCFFFFFF"
                         CornerRadius="15"
@@ -171,6 +179,7 @@
                 </Border>
 
                 <!-- ================= VENDAS ================= -->
+
                 <Border x:Name="PainelVendas"
                         Background="#CCFFFFFF"
                         CornerRadius="15"
@@ -223,8 +232,8 @@
                                 <DataGridTextColumn Header="Código" Binding="{Binding Id}" Width="*"/>
                                 <DataGridTextColumn Header="Cliente" Binding="{Binding ClienteNome}" Width="*"/>
                                 <DataGridTextColumn Header="CPF" Binding="{Binding ClienteDocumento}" Width="*"/>
-                                <DataGridTextColumn Header="Total" Binding="{Binding Total, StringFormat=C}" Width="*"/>
-                                <DataGridTextColumn Header="Data" Binding="{Binding DataHora, StringFormat=dd/MM/yyyy HH:mm:ss}" Width="*"/>
+                                <DataGridTextColumn Header="Total" Binding="{Binding Total}" Width="*"/>
+                                <DataGridTextColumn Header="Data" Binding="{Binding DataHora}" Width="*"/>
 
                             </DataGrid.Columns>
 
@@ -257,8 +266,7 @@
 
                 <!-- ================= USUÁRIOS ================= -->
 
-                <Grid x:Name="PainelUsuarios"
-                      Visibility="Collapsed">
+                <Grid x:Name="PainelUsuarios" Visibility="Collapsed">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -267,70 +275,159 @@
 
                     <!-- TABELA -->
                     <DataGrid x:Name="gridUsuarios"
-                              AutoGenerateColumns="False"
-                              Margin="0,0,20,0">
+              AutoGenerateColumns="False"
+              Margin="0,0,20,0">
 
                         <DataGrid.Columns>
-
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="80"/>
                             <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" Width="*"/>
                             <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
                             <DataGridTextColumn Header="Tipo" Binding="{Binding TipoUsuario}" Width="120"/>
-
                         </DataGrid.Columns>
 
                     </DataGrid>
 
-                    <!-- FORM -->
+                    <!-- FORMULÁRIO -->
                     <Border Grid.Column="1"
-                            Background="White"
-                            CornerRadius="10"
-                            Padding="20">
+            Background="White"
+            CornerRadius="10"
+            Padding="20">
 
                         <StackPanel>
 
                             <TextBlock Text="Criar Usuário"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       Margin="0,0,0,20"/>
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
 
                             <TextBlock Text="Nome"/>
-                            <TextBox x:Name="txtNomeUsuario" Height="30" Margin="0,5,0,10"/>
+                            <TextBox x:Name="txtNomeUsuario"
+                     Height="30"
+                     Margin="0,5,0,10"/>
 
                             <TextBlock Text="Email"/>
-                            <TextBox x:Name="txtEmailUsuario" Height="30" Margin="0,5,0,10"/>
+                            <TextBox x:Name="txtEmailUsuario"
+                     Height="30"
+                     Margin="0,5,0,10"/>
 
                             <TextBlock Text="Senha"/>
-                            <PasswordBox x:Name="txtSenhaUsuario" Height="30" Margin="0,5,0,10"/>
+                            <PasswordBox x:Name="txtSenhaUsuario"
+                         Height="30"
+                         Margin="0,5,0,10"/>
 
                             <TextBlock Text="Tipo"/>
-                            <ComboBox x:Name="comboTipoUsuario" Height="30" Margin="0,5,0,20">
+                            <ComboBox x:Name="comboTipoUsuario"
+                      Height="30"
+                      Margin="0,5,0,20">
+
                                 <ComboBoxItem Content="Admin"/>
                                 <ComboBoxItem Content="Funcionario"/>
+
                             </ComboBox>
 
                             <Button Content="Salvar Usuário"
-                                    Height="40"
-                                    Background="#16A34A"
-                                    Click="BtnSalvarUsuario_Click"/>
+                    Height="40"
+                    Background="#16A34A"
+                    Click="BtnSalvarUsuario_Click"/>
 
                             <Button Content="Consultar"
-                                    Height="40"
-                                    Margin="0,10,0,0"
-                                    Background="#FF6900"
-                                    Click="BtnConsultarUsuarios_Click"/>
+                    Height="40"
+                    Margin="0,10,0,0"
+                    Background="#FF6900"
+                    Click="BtnConsultarUsuarios_Click"/>
 
                             <Button Content="Excluir"
-                                    Height="40"
-                                    Margin="0,10,0,0"
-                                    Background="#C62828"
-                                    Click="BtnExcluirUsuario_Click"/>
+                    Height="40"
+                    Margin="0,10,0,0"
+                    Background="#C62828"
+                    Click="BtnExcluirUsuario_Click"/>
 
                         </StackPanel>
 
                     </Border>
 
                 </Grid>
+
+                <!-- ================= FORNECEDORES ================= -->
+
+                <Border x:Name="PainelFornecedores"
+        Background="#CCFFFFFF"
+        CornerRadius="15"
+        Padding="20"
+        Visibility="Collapsed">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- BOTÕES CRUD -->
+
+                        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,20">
+
+                            <Button Content="Cadastrar Fornecedor"
+                    Padding="20,8"
+                    Margin="0,0,10,0"
+                    Background="#FF6900"
+                    Click="BtnCadastrarFornecedor"/>
+
+                            <Button Content="Editar"
+                    Padding="20,8"
+                    Margin="0,0,10,0"
+                    Background="#FF6900"
+                    Click="BtnEditarFornecedor"/>
+
+                            <Button Content="Excluir"
+                    Padding="20,8"
+                    Margin="0,0,10,0"
+                    Background="#C11313"
+                    Click="BtnExcluirFornecedor"/>
+
+                            <Button Content="Consultar"
+                    Padding="20,8"
+                    Background="#FF6900"
+                    Click="BtnConsultarFornecedor"/>
+
+                        </StackPanel>
+
+                        <!-- TABELA -->
+
+                        <DataGrid x:Name="gridFornecedores"
+                  Grid.Row="1"
+                  AutoGenerateColumns="False">
+
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn Header="Nome"
+                                    Binding="{Binding Nome}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn Header="CNPJ"
+                                    Binding="{Binding CNPJ}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn Header="Telefone"
+                                    Binding="{Binding Telefone}"
+                                    Width="*"/>
+
+                                <DataGridTextColumn Header="Email"
+                                    Binding="{Binding Email}"
+                                    Width="*"/>
+
+                            </DataGrid.Columns>
+
+                        </DataGrid>
+
+                    </Grid>
+
+                </Border>
 
             </Grid>
 

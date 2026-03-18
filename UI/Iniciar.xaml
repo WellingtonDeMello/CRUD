@@ -210,19 +210,19 @@
                         </Grid>
                     </Border>
                     <Button x:Name="btn_cadas"
-                        Height="50"
-                        Background="#FF6900"
-                        Foreground="White"
-                        FontSize="15"
-                        FontWeight="Bold"
-            >
+        Content="CADASTRAR"
+        Height="50"
+        Background="#FF6900"
+        Foreground="White"
+        FontSize="15"
+        FontWeight="Bold"
+        Click="btnCadastro">
 
                         <Button.Resources>
                             <Style TargetType="{x:Type Border}">
                                 <Setter Property="CornerRadius" Value="25"/>
                             </Style>
                         </Button.Resources>
-                        <Button x:Name="btn_cadas1" Content="CADASTRAR" Background="{x:Null}" Click="btnCadastro"/>
 
                     </Button>
 

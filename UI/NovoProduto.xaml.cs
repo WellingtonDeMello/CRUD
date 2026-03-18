@@ -27,7 +27,7 @@ namespace UI
 
             if (_produto != null)
             {
-                // Preenche os campos com os valores do produto para edição
+                // Preenche os campos para edição
                 boxDescricao.Text = _produto.Descricao;
                 boxUnMedida.Text = _produto.UnidadeDeMedida.ToString();
                 boxCodBarras.Text = _produto.CodBarras;
@@ -40,17 +40,25 @@ namespace UI
 
         private void btnConfirmarProduto(object sender, RoutedEventArgs e)
         {
+            // 🔥 valida preço antes de tudo
+            if (!decimal.TryParse(boxPrecoCusto.Text, out decimal precoCusto) ||
+                !decimal.TryParse(boxPrecoVenda.Text, out decimal precoVenda))
+            {
+                MessageBox.Show("Digite preços válidos.");
+                return;
+            }
+
             try
             {
                 if (_produto == null)
                 {
-                    // Cadastro de novo produto
+                    // Cadastro
                     _pModel.AdicionarProduto(
                         boxDescricao.Text.Trim(),
                         Enum.Parse<UnidadeMedida>(boxUnMedida.Text),
                         boxCodBarras.Text.Trim(),
-                        decimal.Parse(boxPrecoCusto.Text),
-                        decimal.Parse(boxPrecoVenda.Text),
+                        precoCusto, // usa valor validado
+                        precoVenda,
                         boxAtivo.IsChecked ?? false,
                         Enum.Parse<ProdutoGrupo>(boxGrupo.Text)
                     );
@@ -59,14 +67,14 @@ namespace UI
                 }
                 else
                 {
-                    // Edição do produto existente
+                    // Edição
                     _pModel.EditarProduto(
                         _produto.Id,
                         boxDescricao.Text.Trim(),
                         Enum.Parse<UnidadeMedida>(boxUnMedida.Text),
                         boxCodBarras.Text.Trim(),
-                        decimal.Parse(boxPrecoCusto.Text),
-                        decimal.Parse(boxPrecoVenda.Text),
+                        precoCusto,
+                        precoVenda,
                         boxAtivo.IsChecked ?? false,
                         Enum.Parse<ProdutoGrupo>(boxGrupo.Text)
                     );
@@ -74,11 +82,11 @@ namespace UI
                     MessageBox.Show("Produto atualizado com sucesso!");
                 }
 
-                this.Close();
+                Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro: " + ex.Message, "Atenção", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Erro: " + ex.Message);
             }
         }
     }

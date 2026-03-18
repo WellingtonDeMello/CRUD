@@ -13,6 +13,8 @@ namespace Repositorio
 
         public DbSet<Usuario> Usuarios { get; set; }
 
+        public DbSet<Fornecedor> Fornecedores { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=TQR220384\SQLEXPRESS;Database=GestexWPF;User Id=tds;Password=tds123;");
