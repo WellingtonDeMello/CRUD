@@ -154,7 +154,7 @@
 
                 <TextBox x:Name="boxQuantidade"
                          Height="40"
-                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228" TextChanged="boxQuantidade_TextChanged"/>
+                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228"/>
 
             </StackPanel>
 
@@ -180,7 +180,7 @@
                       AutoGenerateColumns="False"
                       Height="260"
                       AlternationCount="{Binding Items.Count, RelativeSource={RelativeSource Mode=Self}}"
-                      SelectionChanged="gridVendaProduto_SelectionChanged" Background="{x:Null}" BorderBrush="{x:Null}">
+                      Background="{x:Null}" BorderBrush="{x:Null}">
 
                 <DataGrid.Columns>
 

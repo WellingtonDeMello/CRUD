@@ -10,7 +10,7 @@ namespace UI
 {
     public partial class NovaVenda : Window
     {
-        // Model responsável pelas regras de negócio da venda (acesso ao banco)
+        // Model responsável pelas regras de negócio da venda 
         VendaModel vModel = new VendaModel();
 
         // Lista produtos adicionados na venda
@@ -34,7 +34,7 @@ namespace UI
             blockTotal.Text = "0";
         }
 
-        // ===================== BUSCAR PRODUTO =====================
+        //BUSCAR PRODUTO 
 
         private async void boxCodProduto_KeyUp(object sender, KeyEventArgs e)
         {
@@ -76,7 +76,7 @@ namespace UI
             }
         }
 
-        // ===================== ADICIONAR PRODUTO =====================
+        //ADICIONAR PRODUTO
 
         private async void boxQuantidade_KeyUp(object sender, KeyEventArgs e)
         {
@@ -133,7 +133,7 @@ namespace UI
             }
         }
 
-        // ===================== CONFIRMAR VENDA =====================
+        //CONFIRMAR VENDA
 
         private async void btnConfirmarVenda(object sender, RoutedEventArgs e)
         {
@@ -154,7 +154,7 @@ namespace UI
             // Cria lista final que será enviada ao banco
             List<VendaProduto> vendaProdutos = new List<VendaProduto>();
 
-            // Copia apenas os dados necessários
+            // Copia os dados 
             foreach (var p in produtos)
             {
                 vendaProdutos.Add(new VendaProduto
@@ -187,11 +187,10 @@ namespace UI
         }
     }
 
-    // ===================== CLASSE DA GRID =====================
 
     class NovaVendaCollection
     {
-        // Dados exibidos na tabela (interface)
+        // Dados exibidos no grid
         public int ProdutoId { get; set; }
         public string ProdutoNome { get; set; }
         public UnidadeMedida UnidadeDeMedida { get; set; }

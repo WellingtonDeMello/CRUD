@@ -10,7 +10,7 @@ namespace UI
         decimal totalVenda;
 
         // Construtor da tela de pagamento
-        // Recebe o valor total da venda vindo da tela de vendas
+        
         public FormaPagamento(decimal total)
         {
             InitializeComponent();
@@ -18,13 +18,13 @@ namespace UI
             // Armazena o total da venda
             totalVenda = total;
 
-            // Mostra o total na tela formatado com duas casas decimais
+            // Mostra o total na tela 
             txtTotal.Text = "Total: R$ " + totalVenda.ToString("F2");
         }
 
-        // =============================
+      
         // PAGAMENTO EM DINHEIRO
-        // =============================
+        
         private void PagamentoDinheiro(object sender, RoutedEventArgs e)
         {
             // Mostra a área de pagamento em dinheiro
@@ -34,9 +34,8 @@ namespace UI
             areaPix.Visibility = Visibility.Collapsed;
         }
 
-        // =============================
+    
         // PAGAMENTO EM PIX
-        // =============================
         private void PagamentoPix(object sender, RoutedEventArgs e)
         {
             // Mostra o QR Code do Pix
@@ -46,9 +45,9 @@ namespace UI
             areaDinheiro.Visibility = Visibility.Collapsed;
         }
 
-        // =============================
+       
         // CALCULAR TROCO
-        // =============================
+       
         private void CalcularTroco(object sender, TextChangedEventArgs e)
         {
             // Tenta converter o valor digitado para decimal
@@ -71,9 +70,9 @@ namespace UI
             }
         }
 
-        // =============================
+   
         // FINALIZAR VENDA
-        // =============================
+      
         private void FinalizarVenda(object sender, RoutedEventArgs e)
         {
             // Mostra mensagem confirmando a venda
@@ -83,9 +82,9 @@ namespace UI
             this.Close();
         }
 
-        // =============================
+       
         // PAGAMENTO COM CARTÃO
-        // =============================
+       
         private void PagamentoCartao(object sender, RoutedEventArgs e)
         {
             // Cria a janela de pagamento com cartão

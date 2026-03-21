@@ -26,7 +26,7 @@ namespace UI
             tipoUsuarioAtual = tipoUsuario;
         }
 
-        // ===================== CONTROLE DE BOTÕES (MENU LATERAL) =====================
+        //CONTROLE DE BOTÕES (MENU LATERAL)
 
         // Reseta todos os botões para cor padrão 
         private void ResetarBotoes()
@@ -39,7 +39,7 @@ namespace UI
             BtnFornecedores.Background = corPadrao;
         }
 
-        // ===================== MOSTRAR PAINÉIS =====================
+        //MOSTRAR PAINÉIS
 
         private void MostrarProdutos(object sender, RoutedEventArgs e)
         {
@@ -70,7 +70,7 @@ namespace UI
 
         private void MostrarUsuarios(object sender, RoutedEventArgs e)
         {
-            // Controle de acesso: apenas Admin pode acessar usuários
+            // Apenas Admin pode acessar usuários
             if (tipoUsuarioAtual != "Admin")
             {
                 MessageBox.Show("Apenas administradores podem acessar usuários.");
@@ -97,7 +97,7 @@ namespace UI
             PainelUsuarios.Visibility = Visibility.Collapsed;
         }
 
-        // ===================== USUÁRIOS =====================
+        //USUÁRIOS
 
         private void BtnConsultarUsuarios_Click(object sender, RoutedEventArgs e)
         {
@@ -191,7 +191,7 @@ namespace UI
             BtnConsultarUsuarios_Click(null, null);
         }
 
-        // ===================== PRODUTOS =====================
+        //PRODUTOS
 
         private void BtnCadastroProduto(object sender, RoutedEventArgs e)
         {
@@ -255,11 +255,11 @@ namespace UI
             BtnConsultarProduto(null, null);
         }
 
-        // ===================== VENDAS =====================
+        //VENDAS
 
         private void BtnNovaVendaDialog(object sender, RoutedEventArgs e)
         {
-            // Abre tela para informar cliente
+            // Abre tela para informar dados do cliente
             ClienteDialog dialog = new ClienteDialog();
 
             // Se usuário confirmou, abre tela de venda
@@ -273,7 +273,7 @@ namespace UI
         {
             using (var context = new Context())
             {
-                // Carrega vendas + produtos relacionados (Include)
+                // Carrega vendas + produtos relacionados
                 gridVendas.ItemsSource = context.Vendas
                     .Include(v => v.VendaProdutos)
                     .ThenInclude(vp => vp.Produto)
@@ -333,7 +333,7 @@ namespace UI
             BtnConsultarVenda(null, null);
         }
 
-        // ===================== FORNECEDORES =====================
+        //FORNECEDORES
 
         private void BtnConsultarFornecedor(object sender, RoutedEventArgs e)
         {

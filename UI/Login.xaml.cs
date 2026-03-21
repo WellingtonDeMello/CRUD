@@ -11,7 +11,7 @@ namespace UI
             InitializeComponent();
         }
 
-        // CONTROLE PLACEHOLDER EMAIL
+        
         private void emailBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             emailPlaceholder.Visibility =
@@ -20,7 +20,7 @@ namespace UI
                 : Visibility.Hidden;
         }
 
-        // CONTROLE PLACEHOLDER SENHA
+        
         private void passBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             senhaPlaceholder.Visibility =
@@ -59,10 +59,6 @@ namespace UI
             iniciarWindow.ShowDialog();
         }
 
-        private void btnLista(object sender, RoutedEventArgs e)
-        {
-            ListaUsuariosWindow listaUsuariosWindow = new ListaUsuariosWindow();
-            listaUsuariosWindow.ShowDialog();
-        }
+        
     }
 }
