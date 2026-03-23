@@ -12,6 +12,8 @@
     <None Remove="1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg" />
     <None Remove="7b7910e2a8267f3a3d52d9120c551e58.jpg" />
     <None Remove="7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" />
+    <None Remove="b1f48ac3-1e52-4672-8184-ec5b4ef41b3b.png" />
+    <None Remove="ChatGPT Image 23 de mar. de 2026, 17_53_37.png" />
     <None Remove="ChatGPT Image 27 de jan. de 2026, 19_20_51.png" />
     <None Remove="key.png" />
     <None Remove="mail.png" />
@@ -43,6 +45,8 @@
     <Resource Include="1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg" />
     <Resource Include="7b7910e2a8267f3a3d52d9120c551e58.jpg" />
     <Resource Include="7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" />
+    <Resource Include="b1f48ac3-1e52-4672-8184-ec5b4ef41b3b.png" />
+    <Resource Include="ChatGPT Image 23 de mar. de 2026, 17_53_37.png" />
     <Resource Include="ChatGPT Image 27 de jan. de 2026, 19_20_51.png" />
     <Resource Include="key.png" />
     <Resource Include="mail.png" />

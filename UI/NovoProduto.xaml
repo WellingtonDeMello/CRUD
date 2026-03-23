@@ -95,9 +95,9 @@
 
         <TextBox Name="boxDescricao"
                  Grid.Column="1"
-                 Margin="3,31,-3,9"
+                 Margin="3,31,-3,10"
                  MaxLength="30"
-                 Background="DarkGray"/>
+                 Background="DarkGray" FontSize="12"/>
 
         <!-- GRUPO -->
         <Label Content="Grupo"

@@ -51,17 +51,26 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="| Sistema de Gestão"
+                <TextBlock Text="| Gestex"
                            FontSize="22"
                            FontWeight="Bold"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" Margin="0,0,256,0"/>
 
                 <TextBlock x:Name="BoxUsuarioAtual"
                            Grid.Column="1"
                            VerticalAlignment="Center"
                            FontWeight="SemiBold"/>
+                <Button Content="X"
+        Grid.Column="2"
+        Width="30"
+        Height="30"
+        Background="Red"
+        Foreground="White"
+        Margin="10,0,0,0"
+        Click="Button_Click"/>
 
             </Grid>
 
@@ -109,9 +118,9 @@
         <!-- AREA PRINCIPAL -->
         <Grid Grid.Row="1"
               Grid.Column="1">
-
-            <Image Source="/7b7910e2a8267f3a3d52d9120c551e58_processed.jpg"
-                   Stretch="UniformToFill"/>
+            <Grid.Background>
+                <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"/>
+            </Grid.Background>
 
             <Grid Margin="30">
 
@@ -430,6 +439,7 @@
                 </Border>
 
             </Grid>
+            
 
         </Grid>
 

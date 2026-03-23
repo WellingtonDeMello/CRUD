@@ -103,7 +103,7 @@
                      Background="Transparent"
                      BorderThickness="0"
                      Padding="20,0"
-                     FontSize="15"
+                     FontSize="20"
                      VerticalContentAlignment="Center"
                      TextChanged="txtNome_TextChanged" Margin="-1,5,1,8"/>
 
@@ -134,7 +134,7 @@
                      Background="Transparent"
                      BorderThickness="0"
                      Padding="20,0"
-                     FontSize="15"
+                     FontSize="20"
                      VerticalContentAlignment="Center"
                      TextChanged="txtEmail_TextChanged" Margin="0,4,0,5" Grid.RowSpan="2"/>
 

@@ -9,7 +9,7 @@
 
     <Window.Resources>
 
-        <!-- Botão arredondado -->
+
         <Style x:Key="RoundedButton" TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -31,7 +31,7 @@
 
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/7b7910e2a8267f3a3d52d9120c551e58_processed.jpg"
+            <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"
                         Stretch="Fill"/>
         </Grid.Background>
 
@@ -39,7 +39,7 @@
                     HorizontalAlignment="Left"
                     Width="268" Margin="36,134,0,0">
 
-            <!-- EMAIL -->
+
             <Border CornerRadius="25"
                     Background="DarkGray"
                     BorderBrush="DarkGray"
@@ -52,7 +52,7 @@
                              Background="Transparent"
                              BorderThickness="0"
                              Padding="20,0"
-                             FontSize="14"
+                             FontSize="20"
                              Foreground="Black"
                              VerticalContentAlignment="Center"
                              TextChanged="emailBox_TextChanged"/>
@@ -66,7 +66,7 @@
                 </Grid>
             </Border>
 
-            <!-- SENHA -->
+
             <Border CornerRadius="25"
                     Background="DarkGray"
                     BorderBrush="DarkGray"
@@ -108,7 +108,7 @@
                     Click="btnNovo"/>
 
         </StackPanel>
-        <Image HorizontalAlignment="Left" Height="160" Margin="90,-16,0,0" VerticalAlignment="Top" Width="162" Source="/ChatGPT Image 27 de jan. de 2026, 19_20_51.png"/>
+        <Image HorizontalAlignment="Left" Height="155" Margin="95,-10,0,0" VerticalAlignment="Top" Width="153" Source="/ChatGPT Image 27 de jan. de 2026, 19_20_51.png"/>
 
     </Grid>
 </Window>

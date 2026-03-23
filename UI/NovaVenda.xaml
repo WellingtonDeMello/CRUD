@@ -117,7 +117,7 @@
                 <Label Content="Digite o Código do Produto" Width="276" Foreground="White"/>
                 <TextBox x:Name="boxCodProduto"
                          Height="40"
-                         KeyUp="boxCodProduto_KeyUp" Width="270" Background="DarkGray"/>
+                         KeyUp="boxCodProduto_KeyUp" Width="270" Background="DarkGray" Foreground="Black"/>
 
             </StackPanel>
 
@@ -154,7 +154,7 @@
 
                 <TextBox x:Name="boxQuantidade"
                          Height="40"
-                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228"/>
+                         KeyUp="boxQuantidade_KeyUp" Background="DarkGray" Width="228" Foreground="Black"/>
 
             </StackPanel>
 
@@ -163,7 +163,7 @@
                 <Label Content="Observação (Opcional)" Width="329" Foreground="White"/>
 
                 <TextBox x:Name="boxObs"
-                         Height="40" Width="321" Background="DarkGray"/>
+                         Height="40" Width="321" Background="DarkGray" Foreground="#FF0C0C0C"/>
 
             </StackPanel>
 

@@ -210,6 +210,12 @@ namespace UI
 
         private void btnEditarProduto(object sender, RoutedEventArgs e)
         {
+            if (tipoUsuarioAtual == "Funcionario")
+            {
+                MessageBox.Show("Funcionários não podem editar produtos.");
+                return;
+            }
+
             if (gridProdutos.SelectedItem == null)
             {
                 MessageBox.Show("Selecione um produto.");
@@ -382,6 +388,13 @@ namespace UI
 
             MessageBox.Show("Fornecedor excluído!");
             BtnConsultarFornecedor(null, null);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Iniciar iniciar = new Iniciar();
+            iniciar.Show();
+            this.Close();
         }
     }
 }

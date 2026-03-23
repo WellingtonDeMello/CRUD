@@ -85,7 +85,7 @@
         <TextBox Name="boxNomeCliente"
                  Grid.Row="1"
                  Margin="0,25,0,20"
-                 MaxLength="30" Background="DarkGray"/>
+                 MaxLength="30" Background="DarkGray" FontSize="18" SelectionTextBrush="Black"/>
 
         <!-- CPF -->
         <Label Grid.Row="1"
@@ -94,7 +94,7 @@
         <TextBox Name="boxCpfCliente"
                  Grid.Row="2"
                  Margin="0,25,0,25"
-                 MaxLength="11" Background="DarkGray"/>
+                 MaxLength="11" Background="DarkGray" FontSize="18" SelectionTextBrush="Black"/>
 
         <!-- BOTÃO -->
         <Button Grid.Row="2"

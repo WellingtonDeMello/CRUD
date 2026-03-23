@@ -32,7 +32,11 @@
 
     <Grid>
 
-        <Image HorizontalAlignment="Left" Height="309" Margin="-2,-6,0,0" VerticalAlignment="Top" Width="361" Source="/7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" Stretch="Fill"/>
+        <Image HorizontalAlignment="Left" Height="309" Margin="-2,-6,0,0" VerticalAlignment="Top" Width="361" Source="/7b7910e2a8267f3a3d52d9120c551e58_processed.jpg" Stretch="Fill">
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"/>
+            </Image.OpacityMask>
+        </Image>
 
         <StackPanel VerticalAlignment="Center"
                     HorizontalAlignment="Center"
@@ -57,7 +61,7 @@
                          Background="Transparent"
                          BorderThickness="0"
                          Padding="15,0"
-                         FontSize="14"
+                         FontSize="20"
                          Foreground="Black"
                          VerticalContentAlignment="Center"/>
             </Border>
@@ -79,7 +83,7 @@
                          Background="Transparent"
                          BorderThickness="0"
                          Padding="15,0"
-                         FontSize="14"
+                         FontSize="20"
                          Foreground="Black"
                          VerticalContentAlignment="Center"/>
             </Border>
