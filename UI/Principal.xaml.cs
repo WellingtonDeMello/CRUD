@@ -26,7 +26,7 @@ namespace UI
             tipoUsuarioAtual = tipoUsuario;
         }
 
-        //CONTROLE DE BOTÕES (MENU LATERAL)
+        //contrele de navegação entre painéis (produtos, vendas, usuários, fornecedores)
 
         // Reseta todos os botões para cor padrão 
         private void ResetarBotoes()
@@ -39,7 +39,7 @@ namespace UI
             BtnFornecedores.Background = corPadrao;
         }
 
-        //MOSTRAR PAINÉIS
+        //mostra painel de produtos e esconde os outros
 
         private void MostrarProdutos(object sender, RoutedEventArgs e)
         {
@@ -97,7 +97,7 @@ namespace UI
             PainelUsuarios.Visibility = Visibility.Collapsed;
         }
 
-        //USUÁRIOS
+        //usuarios
 
         private void BtnConsultarUsuarios_Click(object sender, RoutedEventArgs e)
         {
@@ -191,7 +191,7 @@ namespace UI
             BtnConsultarUsuarios_Click(null, null);
         }
 
-        //PRODUTOS
+        //produtos
 
         private void BtnCadastroProduto(object sender, RoutedEventArgs e)
         {
@@ -261,7 +261,7 @@ namespace UI
             BtnConsultarProduto(null, null);
         }
 
-        //VENDAS
+        //vendas
 
         private void BtnNovaVendaDialog(object sender, RoutedEventArgs e)
         {

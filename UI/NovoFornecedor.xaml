@@ -9,16 +9,16 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize">
 
-    <!-- 🎨 FUNDO -->
+   
     <Window.Background>
         <ImageBrush ImageSource="/1946477-abstrato-azul-e-laranja-moderno-escuro-fundo-gratis-vetor.jpg"
                     Stretch="UniformToFill"/>
     </Window.Background>
 
-    <!-- 🎨 ESTILOS -->
+    
     <Window.Resources>
 
-        <!-- TextBox moderno -->
+        
         <Style TargetType="TextBox">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#444"/>
@@ -49,7 +49,7 @@
             </Setter>
         </Style>
 
-        <!-- Botão moderno -->
+       
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="#FF6900"/>

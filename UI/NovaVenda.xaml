@@ -7,7 +7,7 @@
 
     <Window.Resources>
 
-        <!-- BOTÕES -->
+        
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -26,7 +26,7 @@
             </Setter>
         </Style>
 
-        <!-- TEXTBOX -->
+        
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="#3A3A3A"/>
             <Setter Property="Foreground" Value="White"/>
@@ -59,9 +59,9 @@
             <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
+        
 
-        <!-- HEADER -->
+       
         <Border Background="#FF6900"
                 CornerRadius="20"
                 Padding="20"
@@ -105,7 +105,7 @@
 
         </Border>
 
-        <!-- CODIGO PRODUTO -->
+        
         <Grid Grid.Row="1" Margin="0,5">
 
             <Grid.ColumnDefinitions>
@@ -140,7 +140,7 @@
 
         </Grid>
 
-        <!-- QUANTIDADE + OBS -->
+        
         <Grid Grid.Row="2" Margin="0,5">
 
             <Grid.ColumnDefinitions>
@@ -169,7 +169,7 @@
 
         </Grid>
 
-        <!-- GRID (MENOR) -->
+        
         <Border Grid.Row="3"
                 Background="White"
                 CornerRadius="20"
@@ -204,7 +204,7 @@
 
         </Border>
 
-        <!-- FOOTER -->
+        
         <Grid Grid.Row="4">
 
             <Grid.ColumnDefinitions>

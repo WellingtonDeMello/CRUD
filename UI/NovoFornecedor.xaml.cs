@@ -10,7 +10,7 @@ namespace UI
         // Guarda fornecedor quando for edição
         private Fornecedor fornecedorEditar;
 
-        // CONSTRUTOR PARA CADASTRO 
+      
         public NovoFornecedor()
         {
             InitializeComponent();
@@ -69,7 +69,7 @@ namespace UI
                 return;
             }
 
-            // ================= BANCO =================
+            //BANCO 
 
             using (var context = new Context())
             {

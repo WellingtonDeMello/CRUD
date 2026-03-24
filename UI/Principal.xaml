@@ -41,7 +41,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <!-- HEADER -->
+        
         <Border Grid.ColumnSpan="2"
                 Background="White"
                 Padding="20">
@@ -76,7 +76,7 @@
 
         </Border>
 
-        <!-- MENU -->
+        
         <Border Grid.Row="1"
                 Background="#1F2937"
                 Padding="15">
@@ -115,7 +115,7 @@
 
         </Border>
 
-        <!-- AREA PRINCIPAL -->
+       
         <Grid Grid.Row="1"
               Grid.Column="1">
             <Grid.Background>
@@ -124,7 +124,7 @@
 
             <Grid Margin="30">
 
-                <!-- ================= PRODUTOS ================= -->
+                
 
                 <Border x:Name="PainelProdutos"
                         Background="#CCFFFFFF"
@@ -187,7 +187,7 @@
 
                 </Border>
 
-                <!-- ================= VENDAS ================= -->
+                
 
                 <Border x:Name="PainelVendas"
                         Background="#CCFFFFFF"
@@ -273,7 +273,7 @@
 
                 </Border>
 
-                <!-- ================= USUÁRIOS ================= -->
+                
 
                 <Grid x:Name="PainelUsuarios" Visibility="Collapsed">
 
@@ -282,7 +282,7 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- TABELA -->
+                   
                     <DataGrid x:Name="gridUsuarios"
               AutoGenerateColumns="False"
               Margin="0,0,20,0">
@@ -296,7 +296,7 @@
 
                     </DataGrid>
 
-                    <!-- FORMULÁRIO -->
+                    
                     <Border Grid.Column="1"
             Background="White"
             CornerRadius="10"
@@ -357,7 +357,7 @@
 
                 </Grid>
 
-                <!-- ================= FORNECEDORES ================= -->
+                
 
                 <Border x:Name="PainelFornecedores"
         Background="#CCFFFFFF"
@@ -372,7 +372,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <!-- BOTÕES CRUD -->
+                        
 
                         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,20">
@@ -402,7 +402,7 @@
 
                         </StackPanel>
 
-                        <!-- TABELA -->
+                        
 
                         <DataGrid x:Name="gridFornecedores"
                   Grid.Row="1"

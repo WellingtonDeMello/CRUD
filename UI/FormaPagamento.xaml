@@ -14,7 +14,7 @@
 
     <Grid>
 
-        <!-- CARD CENTRAL -->
+        
         <Border Width="360"
                 Padding="25"
                 Background="White"
@@ -26,7 +26,7 @@
 
                 <StackPanel>
 
-                    <!-- TOTAL -->
+                   
                     <TextBlock x:Name="txtTotal"
                                FontSize="26"
                                FontWeight="Bold"
@@ -39,7 +39,7 @@
                                HorizontalAlignment="Center"
                                Margin="0,0,0,20"/>
 
-                    <!-- BOTÕES -->
+                    
                     <Button Content="Dinheiro"
                             Height="45"
                             Background="#FF6900"
@@ -64,7 +64,7 @@
                             Margin="0,5"
                             Click="PagamentoPix"/>
 
-                    <!-- DINHEIRO -->
+                    
                     <StackPanel x:Name="areaDinheiro"
                                 Visibility="Collapsed"
                                 Margin="0,20,0,0">
@@ -90,7 +90,7 @@
 
                     </StackPanel>
 
-                    <!-- PIX -->
+                    
                     <StackPanel x:Name="areaPix"
                                 Visibility="Collapsed"
                                 Margin="0,20,0,0"
@@ -113,7 +113,7 @@
 
                     </StackPanel>
 
-                    <!-- CARTÃO -->
+                    
                     <StackPanel x:Name="areaCartao"
                                 Visibility="Collapsed"
                                 Margin="0,20,0,0"

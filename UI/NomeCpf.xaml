@@ -13,7 +13,7 @@
 
     <Window.Resources>
 
-        <!-- TEXTBOX ESTILO -->
+       
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="35"/>
             <Setter Property="FontSize" Value="14"/>
@@ -34,7 +34,7 @@
 
         </Style>
 
-        <!-- BOTÃO ESTILO -->
+        
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>
@@ -70,7 +70,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- TÍTULO -->
+        
         <TextBlock Grid.Row="0"
                    Text="INSIRA O NOME E O CPF DO CLIENTE"
                    FontSize="16"
@@ -78,7 +78,7 @@
                    HorizontalAlignment="Center"
                    Margin="0,0,0,25" Foreground="White"/>
 
-        <!-- NOME -->
+        
         <Label
                Content="Nome do Cliente" Margin="2,41,-2,5" Grid.RowSpan="2" Foreground="White"/>
 
@@ -87,7 +87,7 @@
                  Margin="0,25,0,20"
                  MaxLength="30" Background="DarkGray" FontSize="18" SelectionTextBrush="Black"/>
 
-        <!-- CPF -->
+       
         <Label Grid.Row="1"
                Content="CPF" Margin="0,73,0,7" Grid.RowSpan="2" Foreground="White"/>
 
@@ -96,7 +96,7 @@
                  Margin="0,25,0,25"
                  MaxLength="11" Background="DarkGray" FontSize="18" SelectionTextBrush="Black"/>
 
-        <!-- BOTÃO -->
+        
         <Button Grid.Row="2"
                 Content="Continuar Venda"
                 Background="#FF6900"

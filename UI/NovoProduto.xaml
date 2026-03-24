@@ -12,7 +12,7 @@
 
     <Window.Resources>
 
-        <!-- TEXTBOX ESTILO (CORRIGIDO) -->
+        
         <Style TargetType="TextBox">
             <Setter Property="Height" Value="35"/>
             <Setter Property="FontSize" Value="14"/>
@@ -32,7 +32,7 @@
             </Setter>
         </Style>
 
-        <!-- COMBOBOX ESTILO -->
+        
         <Style TargetType="ComboBox">
             <Setter Property="Height" Value="35"/>
             <Setter Property="FontSize" Value="14"/>
@@ -40,7 +40,7 @@
             <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
-        <!-- BOTÃO ESTILO -->
+       
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Height" Value="40"/>

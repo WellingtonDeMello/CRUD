@@ -29,7 +29,7 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- LADO ESQUERDO -->
+                
                 <Border Grid.Column="0"
                         Background="#FF6900"
                         CornerRadius="15,0,0,15" Grid.ColumnSpan="2" Margin="-15,18,433,16">
@@ -77,7 +77,7 @@
                     </StackPanel>
                 </Border>
 
-                <!-- LADO DIREITO -->
+                
                 <StackPanel Grid.Column="1"
             VerticalAlignment="Center"
             Margin="100,0,100,0">
@@ -89,8 +89,8 @@
                Margin="0,0,0,35"
                HorizontalAlignment="Center"/>
 
-                    <!-- NOME -->
-                    <Border CornerRadius="25"
+                    
+                   <Border CornerRadius="25"
             Background="DarkGray"
             BorderBrush="#D0D0D0"
             BorderThickness="1.5"
@@ -116,7 +116,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- EMAIL -->
+                    
                     <Border CornerRadius="25"
             Background="DarkGray"
             BorderBrush="#D0D0D0"
@@ -147,7 +147,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- SENHA -->
+                    
                     <Border CornerRadius="25"
             Background="DarkGray"
             BorderBrush="#D0D0D0"
@@ -179,7 +179,7 @@
                         </Grid>
                     </Border>
 
-                    <!-- REPETIR SENHA -->
+                    
                     <Border CornerRadius="25"
             Background="DarkGray"
             BorderBrush="#D0D0D0"

@@ -42,9 +42,6 @@
                     HorizontalAlignment="Center"
                     Width="260">
 
-            <!-- NOME -->
-
-            <!-- NOME -->
             <TextBlock Text="Nome do Cliente"
                        Foreground="White"
                        Margin="5" Height="6"/>
@@ -69,7 +66,7 @@
                        Foreground="White" Height="2"
                        />
 
-            <!-- CPF -->
+         
             <Label Content="CPF" Height="36" Width="260"/>
 
             <Border CornerRadius="25"
@@ -88,7 +85,7 @@
                          VerticalContentAlignment="Center"/>
             </Border>
 
-            <!-- BOTÃO -->
+         
             <Button Content="Salvar"
                     Height="45"
                     Background="#FF6900"
